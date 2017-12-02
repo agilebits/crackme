@@ -29,10 +29,10 @@ type Challenge struct {
 
 // String prints the Challenge without the password
 func (c Challenge) String() string {
-	if c.PrfName == "" {
+	if c.Method == "" {
 		return ""
 	}
-	r := fmt.Sprintf("PRF:\t%s\n", c.PrfName)
+	r := fmt.Sprintf("PRF:\t%s\n", c.Method)
 	r += fmt.Sprintf("Rounds:\t%d\n", c.Rounds)
 	if c.Hint != "" {
 		r += fmt.Sprintf("Hint:\t%s\n", c.Hint)
@@ -50,7 +50,7 @@ func (c Challenge) String() string {
 func (c *Challenge) DeriveKeyWithLength(size int) ([]byte, error) {
 	c.KeyLen = size
 
-	switch c.PrfName {
+	switch c.Method {
 	case "HMAC-SHA256":
 		c.prfHash = sha256.New
 	default:
