@@ -16,18 +16,19 @@ import (
 
 // Challenge has details for each PBKDF2 challenges
 type Challenge struct {
-	Rounds   int    `json:"rounds"`
-	KeyLen   int    `json:"-"`
-	Salt     []byte `json:"-"`
-	SaltHex  string `json:"salt"`
-	Dk       []byte `json:"-"`
-	DkHex    string `json:"derived,omitempty"`
-	Method   string `json:"method"`
-	Pwd      string `json:"pwd,omitempty"`
-	Hint     string `json:"hint"`
 	ID       string `json:"id"`
-	IsSample bool   `json:"sample"`
-	prfHash  func() hash.Hash
+	Hint     string `json:"hint,omitempty"`
+	IsSample bool   `json:"sample,omitempty"`
+	Method   string `json:"method"`
+	Rounds   int    `json:"rounds"`
+	SaltHex  string `json:"salt"`
+	DkHex    string `json:"derived,omitempty"`
+	Pwd      string `json:"pwd,omitempty"`
+
+	KeyLen  int    `json:"-"`
+	Salt    []byte `json:"-"`
+	Dk      []byte `json:"-"`
+	prfHash func() hash.Hash
 }
 
 const (
@@ -119,6 +120,6 @@ func (c *Challenge) FleshOut() {
 	if len(c.ID) == 0 {
 		// create an ID from the salt. (Let's hope all salts are unique)
 		// By taking a multiple of three bytes, we get base64 encoding without padding
-		c.ID = base64.StdEncoding.EncodeToString(c.Salt[0:8])
+		c.ID = base64.StdEncoding.EncodeToString(c.Salt[0:9])
 	}
 }
