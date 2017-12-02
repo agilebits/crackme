@@ -2,7 +2,6 @@
 package crackme
 
 import (
-	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
@@ -15,44 +14,17 @@ import (
 
 // Challenge has details for each PBKDF2 challenges
 type Challenge struct {
-	Rounds, KeyLen     int
-	Salt, Dk           []byte
-	PrfName, Pwd, Hint string
-	prf                func() hash.Hash
-}
-
-// TestVector is for challenges with Expected values
-type TestVector struct {
-	Challenge
-	Expected string
-}
-
-// Pass checks of Dk is Expected
-func (t TestVector) Pass() bool {
-	if t.Dk == nil {
-		t.DeriveKey()
-	}
-	e, _ := hex.DecodeString(t.Expected)
-	if bytes.Compare(t.Dk, e) == 0 {
-		return true
-	}
-	return false
-}
-
-var set5 = TestVector{
-	Challenge: Challenge{
-		Rounds:  4096,
-		KeyLen:  40,
-		Salt:    []byte("saltSALTsaltSALTsaltSALTsaltSALTsalt"),
-		PrfName: "HMAC-SHA256",
-		Pwd:     "passwordPASSWORDpassword",
-		Hint:    "Set 5 https://github.com/ircmaxell/quality-checker/blob/master/tmp/gh_18/PHP-PasswordLib-master/test/Data/Vectors/pbkdf2-draft-josefsson-sha256.test-vectors",
-		prf:     sha256.New,
-		Dk:      nil,
-	},
-	// 348c89dbcbd32b2f32d814b8116e84cf2b17347ebc1800181c4e2a1fb8dd53e1c635518c7dac47e9
-	// From http://stackoverflow.com/a/5136918/1304076
-	Expected: "348c89dbcbd32b2f32d814b8116e84cf2b17347ebc1800181c4e2a1fb8dd53e1c635518c7dac47e9",
+	Rounds  int              `json:"rounds"`
+	KeyLen  int              `json:"-"`
+	Salt    []byte           `json:"-"`
+	SaltB64 string           `json:"salt"`
+	Dk      []byte           `json:"-"`
+	DkB64   string           `json:"derived,omitempty"`
+	Method  string           `json:"method"`
+	Pwd     string           `json:"pwd,omitempty"`
+	Hint    string           `json:"hint"`
+	ID      string           `json:"ID"`
+	prfHash func() hash.Hash `json:"-"`
 }
 
 // String prints the Challenge without the password
@@ -74,31 +46,18 @@ func (c Challenge) String() string {
 	return r
 }
 
-// String for test vector challenge
-func (t TestVector) String() string {
-	if t.Dk == nil {
-		t.DeriveKey()
-	}
-	r := fmt.Sprintf("Passwd:\t\"%s\"\n", t.Pwd)
-	r += t.Challenge.String()
-	r += fmt.Sprintf("Expect:\t%s\n", t.Expected)
-	r += fmt.Sprintf("Passes:\t%v\n", t.Pass())
-
-	return r
-}
-
 // DeriveKeyWithLength calculates the key of size bytes using PBKDF2
 func (c *Challenge) DeriveKeyWithLength(size int) ([]byte, error) {
 	c.KeyLen = size
 
 	switch c.PrfName {
 	case "HMAC-SHA256":
-		c.prf = sha256.New
+		c.prfHash = sha256.New
 	default:
 		return nil, errors.New("unknown PRF")
 	}
 
-	c.Dk = pbkdf2.Key([]byte(c.Pwd), c.Salt, c.Rounds, c.KeyLen, c.prf)
+	c.Dk = pbkdf2.Key([]byte(c.Pwd), c.Salt, c.Rounds, c.KeyLen, c.prfHash)
 	return c.Dk, nil
 }
 
