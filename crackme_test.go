@@ -19,7 +19,7 @@ var set5 = TestVector{
 		Rounds:  4096,
 		KeyLen:  40,
 		Salt:    []byte("saltSALTsaltSALTsaltSALTsaltSALTsalt"),
-		PrfName: "HMAC-SHA256",
+		PRF:     "HMAC-SHA256",
 		Pwd:     "passwordPASSWORDpassword",
 		Hint:    "Set 5 https://github.com/ircmaxell/quality-checker/blob/master/tmp/gh_18/PHP-PasswordLib-master/test/Data/Vectors/pbkdf2-draft-josefsson-sha256.test-vectors",
 		prfHash: sha256.New,
