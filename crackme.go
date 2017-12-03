@@ -35,7 +35,7 @@ type Challenge struct {
 }
 
 // Defaults used for when the input doesn't specify
-const (
+var (
 	DefaultSaltSize = 16            // Default number of bytes in salt
 	DefaultKeySize  = 32            // Default number of bytes for derived key
 	DefaultMethod   = "HMAC-SHA256" // Default PRF for PBKDF2
