@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"hash"
+	"os"
 
 	"golang.org/x/crypto/pbkdf2"
 	// "github.com/jpgoldberg/cryptopg/crackme"
@@ -19,7 +20,7 @@ type Challenge struct {
 	ID       string `json:"id"`
 	Hint     string `json:"hint,omitempty"`
 	IsSample bool   `json:"sample,omitempty"`
-	Method   string `json:"method"`
+	PRF      string `json:"prf"`
 	Rounds   int    `json:"rounds"`
 	SaltHex  string `json:"salt"`
 	DkHex    string `json:"derived,omitempty"`
@@ -40,10 +41,10 @@ const (
 
 // String prints the Challenge without the password
 func (c Challenge) String() string {
-	if c.Method == "" {
+	if c.PRF == "" {
 		return ""
 	}
-	r := fmt.Sprintf("PRF:\t%s\n", c.Method)
+	r := fmt.Sprintf("PRF:\t%s\n", c.PRF)
 	r += fmt.Sprintf("Rounds:\t%d\n", c.Rounds)
 	if c.Hint != "" {
 		r += fmt.Sprintf("Hint:\t%s\n", c.Hint)
@@ -61,7 +62,7 @@ func (c Challenge) String() string {
 func (c *Challenge) DeriveKeyWithLength(size int) ([]byte, error) {
 	c.KeyLen = size
 
-	switch c.Method {
+	switch c.PRF {
 	case "HMAC-SHA256":
 		c.prfHash = sha256.New
 	default:
@@ -69,7 +70,7 @@ func (c *Challenge) DeriveKeyWithLength(size int) ([]byte, error) {
 	}
 
 	if c.KeyLen > c.prfHash().Size() {
-		fmt.Printf("PBKDF2 sucks at stretching: keylen %d > hash size %d", c.KeyLen, c.prfHash().Size())
+		fmt.Fprintf(os.Stderr, "PBKDF2 sucks at stretching: keylen %d > hash size %d", c.KeyLen, c.prfHash().Size())
 	}
 
 	c.Dk = pbkdf2.Key([]byte(c.Pwd), c.Salt, c.Rounds, c.KeyLen, c.prfHash)
@@ -94,12 +95,12 @@ func (c *Challenge) FleshOut() {
 	if c.KeyLen == 0 {
 		c.KeyLen = DefaultKeySize
 	}
-	if len(c.Method) == 0 {
-		c.Method = DefaultMethod
+	if len(c.PRF) == 0 {
+		c.PRF = DefaultMethod
 	}
 
 	switch {
-	case c.Salt == nil && len(c.Salt) == 0:
+	case c.Salt == nil && len(c.SaltHex) == 0:
 		c.Salt = make([]byte, DefaultSaltSize)
 		rand.Read(c.Salt)
 		fallthrough
