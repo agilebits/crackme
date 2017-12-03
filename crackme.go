@@ -1,4 +1,6 @@
 // Package crackme is for creating cracking challenges
+// It is a useful (to me at least) tool for generating PBKDF2 password cracking
+// challenges.
 package crackme
 
 import (
@@ -15,7 +17,7 @@ import (
 	// "github.com/jpgoldberg/cryptopg/crackme"
 )
 
-// Challenge has details for each PBKDF2 challenges
+// Challenge has details for each PBKDF2 challenge
 type Challenge struct {
 	ID       string `json:"id"`
 	Hint     string `json:"hint,omitempty"`
@@ -32,11 +34,12 @@ type Challenge struct {
 	prfHash func() hash.Hash
 }
 
+// Defaults used for when the input doesn't specify
 const (
-	DefaultSaltSize = 16
-	DefaultKeySize  = 32
-	DefaultMethod   = "HMAC-SHA256"
-	DefaultRounds   = 100000
+	DefaultSaltSize = 16            // Default number of bytes in salt
+	DefaultKeySize  = 32            // Default number of bytes for derived key
+	DefaultMethod   = "HMAC-SHA256" // Default PRF for PBKDF2
+	DefaultRounds   = 100000        // Default number of PBKDF2 rounds
 )
 
 // String prints the Challenge without the password
