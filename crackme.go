@@ -8,6 +8,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"hash"
@@ -43,23 +44,6 @@ var (
 )
 
 // String prints the Challenge without the password
-func (c Challenge) String() string {
-	if c.PRF == "" {
-		return ""
-	}
-	r := fmt.Sprintf("PRF:\t%s\n", c.PRF)
-	r += fmt.Sprintf("Rounds:\t%d\n", c.Rounds)
-	if c.Hint != "" {
-		r += fmt.Sprintf("Hint:\t%s\n", c.Hint)
-	}
-	if c.Salt != nil {
-		r += fmt.Sprintf("Salt:\t%s\n", hex.EncodeToString(c.Salt))
-	}
-	if c.Dk != nil {
-		r += fmt.Sprintf("DKey:\t%s\n", hex.EncodeToString(c.Dk))
-	}
-	return r
-}
 
 // DeriveKeyWithLength calculates the key of size bytes using PBKDF2
 func (c *Challenge) DeriveKeyWithLength(size int) ([]byte, error) {
@@ -126,4 +110,12 @@ func (c *Challenge) FleshOut() {
 		// By taking a multiple of three bytes, we get base64 encoding without padding
 		c.ID = base64.StdEncoding.EncodeToString(c.Salt[0:9])
 	}
+}
+
+func (c *Challenge) String() string {
+	s, err := json.MarshalIndent(c, "", "\t")
+	if err != nil {
+		return fmt.Sprintf("ERROR: couldn't marshal: %s", err)
+	}
+	return string(s)
 }
