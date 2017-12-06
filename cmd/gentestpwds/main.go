@@ -3,11 +3,16 @@ package main
 import (
 	"bufio"
 	rand "crypto/rand"
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"math/big"
 	"os"
+
+	"github.com/jpgoldberg/cryptopg/crackme"
+	// "github.com/jpgoldberg/cryptopg/crackme"
 )
 
 func main() {
@@ -23,6 +28,10 @@ func main() {
 	numPerKind := *numPerKindPtr
 	shortest := *shortestPtr
 	longest := *longestPtr
+
+	_ = numPerKind
+	_ = shortest
+	_ = longest
 
 	var file *os.File
 	var err error
@@ -43,45 +52,72 @@ func main() {
 		os.Exit(2)
 	}
 
-	// Let's just see that I'm parsing these right
-	fmt.Printf("n == %d; s == %d; l == %d\n", numPerKind, shortest, longest)
-	if flag.NArg() == 1 {
-		fmt.Printf("opened <%s> for reading\n", flag.Arg(0))
-	} else {
-		fmt.Println("reading from standard input")
-
-	}
-
 	scanner := bufio.NewScanner(file)
 	var words []string
 	for scanner.Scan() {
 		words = append(words, scanner.Text())
 	}
-	// just some testing
-	fmt.Printf("The %d-th word is \"%s\"\n", 123+1, words[123])
+
+	gen := newGeneratorFromList(words)
+
+	var challenges []crackme.Challenge
+	for length := shortest; length <= longest; length++ {
+		for i := 1; i <= numPerKind; i++ {
+			pwd := gen.generate(length)
+			c := new(crackme.Challenge)
+			c.Pwd = pwd
+			c.Hint = fmt.Sprintf("%d words", length)
+			c.FleshOut()
+			c.DeriveKey()
+			challenges = append(challenges, *c)
+		}
+	}
+	s, err := json.MarshalIndent(challenges, "", "\t")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "can't marshal: %s\n", err)
+		os.Exit(3)
+	}
+
+	fmt.Println(string(s))
+	os.Exit(0)
 }
 
-func genPassphrase(n int, list []string) string {
-	nw := int64(len(list))
-	if nw == 0 {
-		log.Panic("empty word list")
+type generator struct {
+	Wordlist  []string
+	rng       io.Reader
+	Separator string
+	nw        int64
+	bigNw     *big.Int
+}
+
+func newGeneratorFromList(list []string) *generator {
+	g := new(generator)
+	g.Wordlist = list
+	g.nw = int64(len(g.Wordlist))
+	if g.nw == 0 {
+		fmt.Fprintln(os.Stderr, "empty word list")
+		return nil
 	}
+	g.bigNw = big.NewInt(g.nw)
+	g.rng = rand.Reader
+	g.Separator = " "
+
+	return g
+}
+
+func (g *generator) generate(n int) string {
 	if n < 1 {
 		log.Panic("number of words requested should be > 0")
 	}
 
-	bigNw := big.NewInt(nw)
-	rng := rand.Reader
-
-	const sep = " "
 	pp := ""
 	for i := 1; i <= n; i++ {
 		if i > 1 {
-			pp += sep
+			pp += g.Separator
 		}
-		bigIndex, _ := rand.Int(rng, bigNw)
+		bigIndex, _ := rand.Int(g.rng, g.bigNw)
 		index := bigIndex.Uint64()
-		pp += list[index]
+		pp += g.Wordlist[index]
 	}
 	return pp
 }
