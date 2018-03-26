@@ -1,3 +1,4 @@
+// gentest password creates wordlist passwords challenges.
 package main
 
 import (
@@ -12,7 +13,6 @@ import (
 	"os"
 
 	"github.com/jpgoldberg/cryptopg/crackme"
-	// "github.com/jpgoldberg/cryptopg/crackme"
 )
 
 func main() {
