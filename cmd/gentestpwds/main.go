@@ -3,13 +3,15 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	rand "crypto/rand"
+	"encoding/binary"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
 	"log"
-	"math/big"
+	"math"
 	"os"
 
 	"github.com/jpgoldberg/cryptopg/crackme"
@@ -58,7 +60,10 @@ func main() {
 		words = append(words, scanner.Text())
 	}
 
-	gen := newGeneratorFromList(words)
+	gen, err := newGenerator(words)
+	if err != nil {
+		log.Fatalf("couldn't create generator: %v", err)
+	}
 
 	var challenges []crackme.Challenge
 	for length := shortest; length <= longest; length++ {
@@ -89,23 +94,25 @@ type generator struct {
 	Wordlist  []string
 	rng       io.Reader
 	Separator string
-	nw        int64
-	bigNw     *big.Int
+	listSize  uint32 // number of words on list
 }
 
-func newGeneratorFromList(list []string) *generator {
+// newGenerator creates a password generator from a word list
+func newGenerator(list []string) (*generator, error) {
 	g := new(generator)
 	g.Wordlist = list
-	g.nw = int64(len(g.Wordlist))
-	if g.nw == 0 {
-		fmt.Fprintln(os.Stderr, "empty word list")
-		return nil
+	if len(g.Wordlist) > math.MaxUint32 {
+		// Seriously. Who is going to feed in a wordlist this lone?
+		return nil, fmt.Errorf("too many words (%d)", len(g.Wordlist))
 	}
-	g.bigNw = big.NewInt(g.nw)
+	g.listSize = uint32(len(g.Wordlist))
+	if g.listSize == 0 {
+		return nil, fmt.Errorf("empty word list")
+	}
 	g.rng = rand.Reader
 	g.Separator = " "
 
-	return g
+	return g, nil
 }
 
 func (g *generator) generate(n int) string {
@@ -118,9 +125,46 @@ func (g *generator) generate(n int) string {
 		if i > 1 {
 			pp += g.Separator
 		}
-		bigIndex, _ := rand.Int(g.rng, g.bigNw)
-		index := bigIndex.Uint64()
+		index := int31n(g.listSize)
 		pp += g.Wordlist[index]
 	}
 	return pp
+}
+
+// int31n returns, as an int32, a non-negative random number in [0,n) from a cryptographic appropriate source. It panics if n <= 0 or if
+// a security-sensitive random number cannot be created. Care is taken to avoid modulo bias.
+//
+// Copied from the math/rand package..
+func int31n(n uint32) uint32 {
+	if n <= 0 {
+		panic("invalid argument to int31n")
+	}
+	if n&(n-1) == 0 { // n is power of two, can mask
+		return randomInt32() & (n - 1)
+	}
+	max := uint32((1 << 31) - 1 - (1<<31)%uint32(n))
+	v := randomInt32()
+	for v > max {
+		v = randomInt32()
+	}
+	return v % n
+}
+
+// randomInt32 creates a random 32 bit unsigned integer
+func randomInt32() uint32 {
+	b := make([]byte, 8)
+	_, err := rand.Read(b)
+	if err != nil {
+		panic("PRNG gen error:" + err.Error())
+	}
+
+	var result int32
+	buf := bytes.NewReader(b)
+	err = binary.Read(buf, binary.LittleEndian, &result)
+
+	if err != nil {
+		panic("PRNG conversion error:" + err.Error())
+	}
+
+	return uint32(result)
 }
