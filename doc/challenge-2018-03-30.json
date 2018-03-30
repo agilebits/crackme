@@ -25,8 +25,7 @@
 		"prf": "HMAC-SHA256",
 		"rounds": 100000,
 		"salt": "5ed20a9710cddc0278cbb345c5a4ac3d",
-		"derived": "524098d90da74ed38cb86a5ebf5f4cecd39e52d200d7c32b4606731d5696b3d5",
-		"pwd": "ambulant horsefly capstone"
+		"derived": "524098d90da74ed38cb86a5ebf5f4cecd39e52d200d7c32b4606731d5696b3d5"
 	},
 	{
 		"id": "7US3F563",
@@ -34,8 +33,7 @@
 		"prf": "HMAC-SHA256",
 		"rounds": 100000,
 		"salt": "61410db16b0fd63506f6e23397163e7b",
-		"derived": "a99324a52cea7e8ed70490d8668625b65912e591c163a8047853565276e0fd02",
-		"pwd": "taffrail highborn shoe"
+		"derived": "a99324a52cea7e8ed70490d8668625b65912e591c163a8047853565276e0fd02"
 	},
 	{
 		"id": "GENGITHG",
@@ -43,7 +41,6 @@
 		"prf": "HMAC-SHA256",
 		"rounds": 100000,
 		"salt": "cdb02877fbb1e7d62fc8b7ddd30de2a9",
-		"derived": "dc61e18eaa1add3e555cd493acb9088449d2ac07a739eec15cd299a327bf45b0",
-		"pwd": "livid aye length"
+		"derived": "dc61e18eaa1add3e555cd493acb9088449d2ac07a739eec15cd299a327bf45b0"
 	}
 ]
