@@ -70,8 +70,14 @@ To get similar output, but with the passwords remaining, use the `-p` flag.
 $ chcreator -p  < edited-2018-03-30.json > answers-2018-03-30.json
 ```
 
-
 If you just want to check whether the derived keys provided in the source are correct, use the `-t` flag. If you don't want to 
 
+```
+$ chcreator -t < answers-2018-03-30.json 
+0 bad derived keys out of 5 tested
+```
 
 
+## Next steps
+
+Keep the "answers" file private and publish the "challenge" file. Destroy the "secret" and "edit" files.
