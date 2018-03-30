@@ -29,6 +29,35 @@ See the file [secret-2018-03-30.json](./secret-2018-03-30.json) for what such ou
 
 ## Step 2: Manually edit hints and sample status
 
-The next step is to manually edit that add to hints, if desired and indicate which items are samples (and so will have the passwords displayed).
+The next step is to manually edit that add to hints, if desired, and indicate which items are samples (and so will have the passwords displayed).
+
+For the files in this directory, that was
+
+```
+cp secret-2018-03-30.json answers-2018-03-30.json
+vim answers-2018-03-30.json
+```
+
+Typically, you would not make a copy to edit, but would edit the generated output directly. The only reason that a copy is made here is to help document 
+each step.
+
+We can edit an item to look like
+
+```json
+{
+	"id": "CPU6BAGE",
+	"hint": "3 words (one of which was new to me)",
+	"sample": true,
+	"prf": "HMAC-SHA256",
+	"rounds": 100000,
+	"salt": "00bb202b205f064e30f6fae101162a2e",
+	"derived": "91976be95cd28e55e580ee9f69a2139202a9b65eabfbbf33c99bc42e3665564d",
+	"pwd": "tanbark artistic callus"
+}
+```
+
+## Step 3: `chcreator`
+
+In our examples, `chcreator` has very little to do because our source file for it already includes the derived key, salt, and so on. But it could work from sparser source.  The `-t` flag will check that the derived keys provided in the source actually work.
 
 
