@@ -1,4 +1,4 @@
-// Package crackme is for creating cracking challenges
+// Package crackme is for creating PBKDF2 cracking challenges
 // It is a useful (to me at least) tool for generating PBKDF2 password cracking
 // challenges.
 package crackme
@@ -6,7 +6,7 @@ package crackme
 import (
 	rand "crypto/rand"
 	"crypto/sha256"
-	"encoding/base64"
+	"encoding/base32"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -42,8 +42,6 @@ var (
 	DefaultMethod   = "HMAC-SHA256" // Default PRF for PBKDF2
 	DefaultRounds   = 100000        // Default number of PBKDF2 rounds
 )
-
-// String prints the Challenge without the password
 
 // DeriveKeyWithLength calculates the key of size bytes using PBKDF2
 func (c *Challenge) DeriveKeyWithLength(size int) ([]byte, error) {
@@ -106,9 +104,10 @@ func (c *Challenge) FleshOut() {
 	}
 
 	if len(c.ID) == 0 {
-		// create an ID from the salt. (Let's hope all salts are unique)
-		// By taking a multiple of three bytes, we get base64 encoding without padding
-		c.ID = base64.StdEncoding.EncodeToString(c.Salt[0:9])
+		// If we haven't already been given an ID, we still want the same
+		// output for each run, so we construct the ID from the salt.
+		// By taking a multiple of five bytes, we get base32 encoding without padding
+		c.ID = MakeID(c.Salt)
 	}
 }
 
@@ -118,4 +117,16 @@ func (c *Challenge) String() string {
 		return fmt.Sprintf("ERROR: couldn't marshal: %s", err)
 	}
 	return string(s)
+}
+
+// MakeID constructs an ID string from the seed (if not nil) or a random one if nil
+func MakeID(seed []byte) string {
+	if len(seed) < 5 {
+		// we don't use it and we make a random one
+		rawID := make([]byte, 5)
+		rand.Read(rawID)
+		return base32.StdEncoding.EncodeToString(rawID)
+	}
+	return base32.StdEncoding.EncodeToString(seed[:4])
+
 }

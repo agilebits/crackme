@@ -67,8 +67,11 @@ func main() {
 			c := new(crackme.Challenge)
 			c.Pwd = pwd
 			c.Hint = fmt.Sprintf("%d words", length)
+			c.ID = crackme.MakeID(nil)
+
 			c.FleshOut()
 			c.DeriveKey()
+
 			challenges = append(challenges, *c)
 		}
 	}
