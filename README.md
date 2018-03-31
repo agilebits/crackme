@@ -49,7 +49,7 @@ Individual challenges will look something like this.
 ```
 
 They were generated using
-code in [gentestpwds](./cmd/gentestpwds/) and [chcreator](./cmd/chcreator), the usage of which is described in [docs/README](./docs/README.md).
+code in [gentestpwds](./cmd/gentestpwds/) and [chcreator](./cmd/chcreator), the usage of which is described in [doc/README](./doc/README.md).
 
 ## Administration
 
