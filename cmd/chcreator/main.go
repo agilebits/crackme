@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
 
 	"github.com/jpgoldberg/cryptopg/crackme"
 
@@ -40,8 +41,7 @@ func main() {
 		} else {
 			_, err := c.DeriveKey()
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "Couldn't derive key: %v\n", err)
-				os.Exit(1)
+				log.Printf("Couldn't derive key: %v\n", err)
 			}
 		}
 	}
@@ -49,23 +49,21 @@ func main() {
 	if *testKeys {
 		fmt.Printf("%d bad derived keys out of %d tested\n", badDkCnt, dkCnt)
 		if badDkCnt > 0 {
-			os.Exit(0)
-		} else {
 			os.Exit(2)
+		} else {
+			os.Exit(0)
 		}
 	}
 	// else if not just testing keys, we prepare output
 
 	for _, c := range challenges {
-		if !*withPwds {
-			if !c.IsSample {
-				c.Pwd = ""
-			}
+		if !(*withPwds || c.IsSample) {
+			c.Pwd = ""
 		}
 	}
 	s, err := json.MarshalIndent(challenges, "", "\t")
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "can't marshal: %s\n", err)
+		log.Printf("Can't marshal: %s\n", err)
 	}
 
 	fmt.Println(string(s))
@@ -73,15 +71,6 @@ func main() {
 }
 
 func getChallenges() []*crackme.Challenge {
-	/*
-		file, err := os.Open("./data/secret/2017-11-01-secrets.json")
-		if err != nil {
-			fmt.Println(err)
-		}
-		defer file.Close()
-		scanner := bufio.NewScanner(file)
-	*/
-
 	scanner := bufio.NewScanner(os.Stdin)
 	var fText []byte
 	for scanner.Scan() {
@@ -90,7 +79,7 @@ func getChallenges() []*crackme.Challenge {
 
 	result := new([]*crackme.Challenge)
 	if err := json.Unmarshal(fText, result); err != nil {
-		fmt.Fprintf(os.Stderr, "Couldn't unmarshal: %s\n", err)
+		log.Fatalf("Couldn't unmarshal: %s\n", err)
 	}
 	return *result
 }
