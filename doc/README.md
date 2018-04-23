@@ -2,6 +2,10 @@
 
 There are two commands here that help with generating a password challenge. They do not fully automate the process. There is a step that involves some manual editing.
 
+Note that these were put together as "throw-away scripts" by someone first playing with Go. Development pretty much stopped once they minimally worked.
+
+This documentation was originally intended for Bugcrowd, so that they could generate the challenges. But it is also useful to those participating in the challenges to see exactly how the challenges were generated.
+
 ## Step 1: `gentestpwds` to create random passwords with details
 
 `gentestpwds` generates random wordlist type passwords from a list of words given as standard input. It assumes that the wordlist doesn't contain duplicates. It does no sanity checking on its input.
@@ -29,7 +33,10 @@ See the file [secret-2018-03-30.json](./secret-2018-03-30.json) for what such ou
 
 ## Step 2: Manually edit hints and sample status
 
-The next step is to manually edit that add to hints, if desired, and indicate which items are samples (and so will have the passwords displayed).
+The next step is to manually edit that output to
+
+1. Modify hints if desired.
+2. Indicate which items are samples (and so will have the passwords displayed).
 
 For the files in this directory, that was
 
@@ -70,7 +77,7 @@ To get similar output, but with the passwords remaining, use the `-p` flag.
 $ chcreator -p  < edited-2018-03-30.json > answers-2018-03-30.json
 ```
 
-If you just want to check whether the derived keys provided in the source are correct, use the `-t` flag. If you don't want to 
+If you just want to check whether the derived keys provided in the source are correct, use the `-t` flag. This can be used to verify whether a submitted answer is correct.
 
 ```
 $ chcreator -t < answers-2018-03-30.json 
