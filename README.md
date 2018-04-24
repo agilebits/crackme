@@ -1,19 +1,18 @@
 # Password cracking challenges
 
-Our (AgileBits') goals in offering these challenges is to gain a better
-sense of the resistance of various types of user Master Passwords to cracking if 1Password data is captured from a user's device.
+Our (1Password's) goals in offering these challenges is to gain a better sense of the resistance of various types of user Master Passwords to cracking if 1Password data is captured from a user's device.
 
 ## Background
 
 Our use of Two Secret Key Derivation (2SKD) protects users from Master Password cracking attempts in the event that data is captured from our servers, but 2SKD does not offer that protection if data is captured from the user's own device. Thus the strength of user Master Passwords remains an important part of user security for 1Password.
 
-We need to encourage users to use Master Passwords which they can 
+We need to encourage users to use Master Passwords which
 
-1. People can remember
-2. People can reasonably enter on their devices
-3. Are sufficiently strong
+1. people can remember
+2. people can reasonably enter on their devices
+3. are sufficiently strong
 
-The challenges are designed to help us better understand (3).
+We are creating these challenges to help us better understand (3).
 
 ## Challenges can't be too hard (or too easy)
 
@@ -23,19 +22,17 @@ Let us emphasize this point for when results come in: **These challenges are int
 
 This means that the passwords we present here are weaker than we recommend as 1Password Master Passwords. The prizes we offer should be worth the effort that the participants need to put in.
 
-At the same time, we want the attempts to take some real effort so that we can get more data on that effort. In any cracking effort, there are some fixed costs of simply setting up the cracking run (preparing the data, configuring the software, etc), we want those costs to be dominated by the actual cracking.
-
-Whether or not the difficulty of the challenges and the prizes set achieve our aims is something we will not know until we run this.
+At the same time we want the attempts to take some real effort so that we can get more data on that effort. In any cracking effort, there are some fixed costs of simply setting up the cracking run (preparing the data, configuring the software, etc), we want those costs to be dominated by the actual cracking.
 
 ## How we help the participants
 
-Our interest is to understand cracking efforts in terms of the strength of a test Master Password under the assumption that an attacker fully knows the details of key derivation and password generation scheme. Therefore we try to provide everything a participant will need to know to set up their systems prior to the beginning of the competition. Thus we include
+Our interest is to understand cracking efforts in terms of the strength of a test Master Password under the assumption that an attacker fully knows the details of key derivation and password generation scheme. Therefore we try to provide everything a participant will need to know to set up their systems prior to the beginning of the competition. Thus we make available
 
-1. The source for the scripts used to generate the challenge passwords
-2. Sample challenges (some with "answers") published prior to the official challenge.
+1. The [source for the scripts](https://github.com/agilebits/crackme) used to generate the challenge passwords
+2. [Sample challenges](https://github.com/agilebits/crackme/tree/master/doc) (some with "answers") published prior to the official challenge.
 3. The KDF we use for these challenges is stripped of many of the idiosyncracies of the 1Password KDF that are not relevant for the difficulty of cracking locally captured data.
 
-Individual challenges will look something like this.
+Individual challenges will look something like this, but see the source for generating them and the sample docs for more detail.
 
 ```
 {
@@ -47,10 +44,6 @@ Individual challenges will look something like this.
     "derived": "3e0f1903cc73b07a7070a661f8450d495cc99151ae67bcdf69a80d0391e7d62f"
 }
 ```
-
-They were generated using
-code in [gentestpwds](./cmd/gentestpwds/) and [chcreator](./cmd/chcreator), the usage of which is described in [doc/README](./doc/README.md).
-
 ## Administration
 
 To ensure fair handling of the contest itself and the award of payments, we are asking BugCrowd to administer this. This is a natural choice, as they both have the experience with delivering bounties, and have earned a reputation as a trusted party in dealing both with those offering bounties and those seeking them.
@@ -63,17 +56,23 @@ To ensure fair handling of the contest itself and the award of payments, we are 
 
 - For the third person or team to crack yet a different three word password, we offer 1024 USD.
 
+If no correct submission has been submitted within one month, we _may_ increasing the prizes. However, such an increase and the timing of it (if it occurs) will be unpredictable. Do not delay a submission in the hope of an increased prize.
+
 ## Rules
 
-To be written. Needs to include things like
+[NEED BC HELP]
 
 1. No one at AgileBits or BugCrowd can win.
+2. Social engineering, or gaining the solutions through penetration is not allowed. This is a cracking-only exercise.
+3. Participants may only use systems with the owner's permission. You may not steal computing resources in your cracking efforts.
 2. Winners must provide a write-up of what they did, with estimations of total cost to crack, guesses per second, the systems used.
-3. Contact/submission address
-4. Whatever else
+3. [Contact/submission procedures BC]
+4. [Whatever else BC]
 
 ## Schedule
 
 Announcement of forthcoming challenge (when this and associated documents are published): TBA
 
-Start of contest. Publication of the actual challenges: TBA
+Start of contest. Publication of the actual challenges: Noon, EST on World Password Day, May 3. 2006-01-02 15:04:05 +0000 UTC
+
+The challenge will be published at that time at [NEED BC TO PROVIDE THE URL]
