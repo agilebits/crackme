@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/jpgoldberg/cryptopg/crackme"
+	"github.com/agilebits/crackme"
 
 	"os"
 )

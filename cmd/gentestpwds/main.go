@@ -14,7 +14,7 @@ import (
 	"math"
 	"os"
 
-	"github.com/jpgoldberg/cryptopg/crackme"
+	"github.com/agilebits/crackme"
 )
 
 func main() {
