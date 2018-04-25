@@ -90,6 +90,8 @@ func main() {
 	os.Exit(0)
 }
 
+// We haven't yet made the source of the Secure Password Generator public
+// so we'll just use an ad-hoc special purpose wordlist generator here.
 type generator struct {
 	Wordlist  []string
 	rng       io.Reader
@@ -102,7 +104,7 @@ func newGenerator(list []string) (*generator, error) {
 	g := new(generator)
 	g.Wordlist = list
 	if len(g.Wordlist) > math.MaxUint32 {
-		// Seriously. Who is going to feed in a wordlist this lone?
+		// Seriously. Who is going to feed in a wordlist this long?
 		return nil, fmt.Errorf("too many words (%d)", len(g.Wordlist))
 	}
 	g.listSize = uint32(len(g.Wordlist))
@@ -134,7 +136,7 @@ func (g *generator) generate(n int) string {
 // int31n returns, as an int32, a non-negative random number in [0,n) from a cryptographic appropriate source. It panics if n <= 0 or if
 // a security-sensitive random number cannot be created. Care is taken to avoid modulo bias.
 //
-// Copied from the math/rand package..
+// Copied from the math/rand package.
 func int31n(n uint32) uint32 {
 	if n <= 0 {
 		panic("invalid argument to int31n")
