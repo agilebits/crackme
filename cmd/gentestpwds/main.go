@@ -14,6 +14,8 @@ import (
 	"math"
 	"os"
 
+	"github.com/agilebits/spg"
+
 	"github.com/agilebits/crackme"
 )
 
@@ -59,18 +61,30 @@ func main() {
 	for scanner.Scan() {
 		words = append(words, scanner.Text())
 	}
-
-	gen, err := newGenerator(words)
+	wl, err := spg.NewWordList(words)
 	if err != nil {
-		log.Fatalf("couldn't create generator: %v", err)
+		log.Fatalf("Failed to create wordlist: %v", err)
 	}
+
+	/*
+		gen, err := newGenerator(words)
+		if err != nil {
+			log.Fatalf("couldn't create generator: %v", err)
+		}
+	*/
 
 	var challenges []crackme.Challenge
 	for length := shortest; length <= longest; length++ {
+		r := spg.NewWLRecipe(length, wl)
+		r.SeparatorChar = " "
 		for i := 1; i <= numPerKind; i++ {
-			pwd := gen.generate(length)
+			// pwd := gen.generate(length)
+			pw, err := r.Generate()
+			if err != nil {
+				log.Fatalf("Failed to generate password: %v", err)
+			}
 			c := new(crackme.Challenge)
-			c.Pwd = pwd
+			c.Pwd = pw.String()
 			c.Hint = fmt.Sprintf("%d words", length)
 			c.ID = crackme.MakeID(nil)
 
