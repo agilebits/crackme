@@ -65,7 +65,7 @@ If no correct submission has been submitted within one month, we _may_ increasin
 1. No one at AgileBits or BugCrowd can win.
 2. Social engineering, or gaining the solutions through penetration is not allowed. This is a cracking-only exercise.
 3. Participants may only use systems with the owner's permission. You may not steal computing resources in your cracking efforts.
-2. Winners must provide a write-up of what they did, with estimations of total cost to crack, guesses per second, the systems used.
+2. Winners must provide a write-up of what they did, with estimations of total cost to crack, guesses per second, the systems used. The write-up need not be submitted at the same time as a successful crack, which need only include the ID of the particular challenge and the successful password.
 3. [Contact/submission procedures BC]
 4. [Whatever else BC]
 
@@ -73,6 +73,6 @@ If no correct submission has been submitted within one month, we _may_ increasin
 
 Announcement of forthcoming challenge (when this and associated documents are published): TBA
 
-Start of contest. Publication of the actual challenges: Noon, EST on World Password Day, May 3. 2006-01-02 15:04:05 +0000 UTC
+Start of contest. Publication of the actual challenges: Noon, EST on World Password Day, May 3. 2018-05-03 16:00:00 +0000 UTC
 
 The challenge will be published at that time at [NEED BC TO PROVIDE THE URL]
