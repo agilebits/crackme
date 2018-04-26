@@ -76,4 +76,4 @@ Announcement of forthcoming challenge (when this and associated documents are pu
 
 Start of contest. Publication of the actual challenges: Noon, EST on World Password Day, May 3, 2018. 2018-05-03 16:00:00 +0000 UTC
 
-The challenge will be published at that time at [NEED BC TO PROVIDE THE URL]
+The challenge will be published at that time at https://github.com/agilebits/crackme/tree/master/password-day-2018.json
