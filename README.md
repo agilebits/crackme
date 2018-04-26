@@ -44,6 +44,7 @@ Individual challenges will look something like this, but see the source for gene
     "derived": "3e0f1903cc73b07a7070a661f8450d495cc99151ae67bcdf69a80d0391e7d62f"
 }
 ```
+
 ## Administration
 
 To ensure fair handling of the contest itself and the award of payments, we are asking BugCrowd to administer this. This is a natural choice, as they both have the experience with delivering bounties, and have earned a reputation as a trusted party in dealing both with those offering bounties and those seeking them.
@@ -52,9 +53,9 @@ To ensure fair handling of the contest itself and the award of payments, we are 
 
 - For the first person or team to crack a three word password, we offer 4096 USD.
 
-- For the second person or team to crack a different three word password, we offer 2048 USD.
+- For the second person or team to crack a _different_ three word password, we offer 2048 USD.
 
-- For the third person or team to crack yet a different three word password, we offer 1024 USD.
+- For the third person or team to crack _yet a different_ three word password, we offer 1024 USD.
 
 If no correct submission has been submitted within one month, we _may_ increasing the prizes. However, such an increase and the timing of it (if it occurs) will be unpredictable. Do not delay a submission in the hope of an increased prize.
 
@@ -65,7 +66,7 @@ If no correct submission has been submitted within one month, we _may_ increasin
 1. No one at AgileBits or BugCrowd can win.
 2. Social engineering, or gaining the solutions through penetration is not allowed. This is a cracking-only exercise.
 3. Participants may only use systems with the owner's permission. You may not steal computing resources in your cracking efforts.
-2. Winners must provide a write-up of what they did, with estimations of total cost to crack, guesses per second, the systems used.
+2. Winners must provide a write-up of what they did, with estimations of total cost to crack, guesses per second, the systems used. The write-up need not be submitted at the same time as a successful crack, which need only include the ID of the particular challenge and the successful password.
 3. [Contact/submission procedures BC]
 4. [Whatever else BC]
 
@@ -73,6 +74,6 @@ If no correct submission has been submitted within one month, we _may_ increasin
 
 Announcement of forthcoming challenge (when this and associated documents are published): TBA
 
-Start of contest. Publication of the actual challenges: Noon, EST on World Password Day, May 3. 2006-01-02 15:04:05 +0000 UTC
+Start of contest. Publication of the actual challenges: Noon, EST on World Password Day, May 3, 2018. 2018-05-03 16:00:00 +0000 UTC
 
-The challenge will be published at that time at [NEED BC TO PROVIDE THE URL]
+The challenge will be published at that time at https://github.com/agilebits/crackme/tree/master/password-day-2018.json
