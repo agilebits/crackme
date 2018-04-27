@@ -28,10 +28,6 @@ func main() {
 	shortest := *shortestPtr
 	longest := *longestPtr
 
-	_ = numPerKind
-	_ = shortest
-	_ = longest
-
 	var file *os.File
 	var err error
 
@@ -66,7 +62,6 @@ func main() {
 		r := spg.NewWLRecipe(length, wl)
 		r.SeparatorChar = " "
 		for i := 1; i <= numPerKind; i++ {
-			// pwd := gen.generate(length)
 			pw, err := r.Generate()
 			if err != nil {
 				log.Fatalf("Failed to generate password: %v", err)
