@@ -80,14 +80,17 @@ The challenge will be published at that time at https://github.com/agilebits/cra
 
 ## Contest status
 
-Last update: <!-- TZ=America/New_York date --> Wed May  2 11:14:23 EDT 2018
+Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-05-02:17:43:15 UTC
 
 ID    |  Status   | Successful password | Submission date | By whom       | Place | Write-up location
 :-----|-----------|:--------------------|-----------------|:--------------|-------|:-----------------
-TBA   | Not found |                     | N/A             | N/A           | Nth   | N/A
-TBA   | Not found |                     | N/A             | N/A           | Nth   | N/A
-TBA   | Not found |                     | N/A             | N/A           | Nth   | N/A
-TBA   | Not found |                     | N/A             | N/A           | Nth   | N/A
-TBA   | Not found |                     | N/A             | N/A           | Nth   | N/A
-TBA   | Not found |                     | N/A             | N/A           | Nth   | N/A
-TBA   | Not found |                     | N/A             | N/A           | Nth   | N/A
+TBA   | Sample    |                     | N/A             | Sample        | 0th   | None
+TBA   | Sample    |                     | N/A             | Sample        | 0th   | None
+TBA   | Sample    |                     | N/A             | Sample        | 0th   | None
+TBA   | Not found |                     |                 |               | Nth   |
+TBA   | Not found |                     |                 |               | Nth   |
+TBA   | Not found |                     |                 |               | Nth   |
+TBA   | Not found |                     |                 |               | Nth   |
+TBA   | Not found |                     |                 |               | Nth   |
+TBA   | Not found |                     |                 |               | Nth   |
+TBA   | Not found |                     |                 |               | Nth   |
