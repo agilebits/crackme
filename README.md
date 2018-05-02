@@ -80,17 +80,17 @@ The challenge will be published at that time at https://github.com/agilebits/cra
 
 ## Contest status
 
-Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-05-02:17:43:15 UTC
+Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-05-02:21:09:41 UTC
 
-ID    |  Status   | Successful password | Submission date | By whom       | Place | Write-up location
-:-----|-----------|:--------------------|-----------------|:--------------|-------|:-----------------
-TBA   | Sample    |                     | N/A             | Sample        | 0th   | None
-TBA   | Sample    |                     | N/A             | Sample        | 0th   | None
-TBA   | Sample    |                     | N/A             | Sample        | 0th   | None
-TBA   | Not found |                     |                 |               | Nth   |
-TBA   | Not found |                     |                 |               | Nth   |
-TBA   | Not found |                     |                 |               | Nth   |
-TBA   | Not found |                     |                 |               | Nth   |
-TBA   | Not found |                     |                 |               | Nth   |
-TBA   | Not found |                     |                 |               | Nth   |
-TBA   | Not found |                     |                 |               | Nth   |
+ID         |  Status   |  Successful password      | Submission date | By whom       | Place | Write-up location
+:----------|-----------|:--------------------------|-----------------|:--------------|-------|:-----------------
+3UOKUEBO   | Sample    | governor washout beak     | N/A             | Sample        | 0th   | N/A
+AJPYJUTN   | Sample    | glassy ubiquity absence   | N/A             | Sample        | 0th   | N/A
+IV2DL67Q   | Sample    | splendor excel rarefy     | N/A             | Sample        | 0th   | N/A
+NO4VRU4S   | Not found |                           |                 |               | Nth   |
+33YRS77A   | Not found |                           |                 |               | Nth   |
+J6J4QUWQ   | Not found |                           |                 |               | Nth   |
+SFELTO3W   | Not found |                           |                 |               | Nth   |
+DOHB6DC7   | Not found |                           |                 |               | Nth   |
+2SB5OP3G   | Not found |                           |                 |               | Nth   |
+5BSLBTKR   | Not found |                           |                 |               | Nth   |
