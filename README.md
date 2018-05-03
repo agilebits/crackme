@@ -80,9 +80,9 @@ The challenge will be published at that time at https://github.com/agilebits/cra
 
 ## Contest status
 
-Challenges have now been generated, but are not yet published.
+The game is afoot.
 
-Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-05-02:21:09:41 UTC
+Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-05-03:20:33:44 UTC
 
 ID         |  Status   |  Successful password      | Submission date | By whom       | Place | Write-up location
 :----------|-----------|:--------------------------|-----------------|:--------------|-------|:-----------------
