@@ -47,28 +47,34 @@ Individual challenges will look something like this, but see the source for gene
 
 ## Administration
 
-To ensure fair handling of the contest itself and the award of payments, we are asking BugCrowd to administer this. This is a natural choice, as they both have the experience with delivering bounties, and have earned a reputation as a trusted party in dealing both with those offering bounties and those seeking them.
+To ensure fair handling of the contest itself and the award of payments, we are asking Bugcrowd to administer this.
+
+The bugcrowd program is at https://bugcrowd.com/onepasswordgame
+
+This is a natural choice, as they both have the experience with delivering bounties, and have earned a reputation as a trusted party in dealing both with those offering bounties and those seeking them.
+
 
 ## Prizes
 
-- For the first person or team to crack a three word password, we offer 4096 USD.
+On June 11, 2018 we doubled our initial prizes and added a fourth place prize.
 
-- For the second person or team to crack a _different_ three word password, we offer 2048 USD.
+- For the first person or team to crack a three word password, we offer ~~4096~~ 8192 USD.
 
-- For the third person or team to crack _yet a different_ three word password, we offer 1024 USD.
+- For the second person or team to crack a _different_ three word password, we offer ~~2048~~ 4096 USD.
+
+- For the third person or team to crack _yet a different_ three word password, we offer ~~1024~~ 2048 USD.
+
+- And for the fourth person or team to crack yet another one, we we offer 1024 USD.
 
 If no correct submission has been submitted within one month, we _may_ increasing the prizes. However, such an increase and the timing of it (if it occurs) will be unpredictable. Do not delay a submission in the hope of an increased prize.
 
 ## Rules
 
-[NEED BC HELP]
-
 1. No one at AgileBits or BugCrowd can win.
 2. Social engineering, or gaining the solutions through penetration is not allowed. This is a cracking-only exercise.
 3. Participants may only use systems with the owner's permission. You may not steal computing resources in your cracking efforts.
 2. Winners must provide a write-up of what they did, with estimations of total cost to crack, guesses per second, the systems used. The write-up need not be submitted at the same time as a successful crack, which need only include the ID of the particular challenge and the successful password.
-3. [Contact/submission procedures BC]
-4. [Whatever else BC]
+3. Submission is exclusively [via Bugcrowd](https://bugcrowd.com/onepasswordgame), and Bugcrowd standard rules apply
 
 ## Schedule
 
