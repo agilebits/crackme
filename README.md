@@ -66,7 +66,7 @@ On June 11, 2018 we doubled our initial prizes and added a fourth place prize.
 
 - And for the fourth person or team to crack yet another one, we we offer 1024 USD.
 
-If no correct submission has been submitted within one month, we _may_ increasing the prizes. However, such an increase and the timing of it (if it occurs) will be unpredictable. Do not delay a submission in the hope of an increased prize.
+If no correct submission has been submitted within one month, we _may_ increasing the prizes. [Update: On June 11 we have increased the prizes.]
 
 ## Rules
 
