@@ -49,24 +49,28 @@ Individual challenges will look something like this, but see the source for gene
 
 To ensure fair handling of the contest itself and the award of payments, we are asking Bugcrowd to administer this.
 
-The bugcrowd program is at https://bugcrowd.com/onepasswordgame
+The Bugcrowd program is at https://bugcrowd.com/onepasswordgame
 
 This is a natural choice, as they both have the experience with delivering bounties, and have earned a reputation as a trusted party in dealing both with those offering bounties and those seeking them.
 
 
 ## Prizes
 
-On June 11, 2018 we doubled our initial prizes and added a fourth place prize.
+On June 11, 2018 we doubled our initial prizes and added a fourth place prize. On July 26, we increased the prizes yet again.
 
-- For the first person or team to crack a three word password, we offer ~~4096~~ 8192 USD.
+- For the first person or team to crack a three word password, we offer ~~4096~~ ~~8192~~ 12288 USD.
 
-- For the second person or team to crack a _different_ three word password, we offer ~~2048~~ 4096 USD.
+- For the second person or team to crack a _different_ three word password, we offer ~~2048~~ ~~4096~~ 8192 USD.
 
-- For the third person or team to crack _yet a different_ three word password, we offer ~~1024~~ 2048 USD.
+- For the third person or team to crack _yet a different_ three word password, we offer ~~1024~~ ~~2048~~ 6144 USD.
 
-- And for the fourth person or team to crack yet another one, we we offer 1024 USD.
+- And for the fourth person or team to crack yet another one, we we offer ~~1024~~ 4096 USD.
 
-If no correct submission has been submitted within one month, we _may_ increasing the prizes. [Update: On June 11 we have increased the prizes.]
+If no correct submission has been submitted within one month, we _may_ increasing the prizes. [Update: On June 11 we have increased the prizes. On July 26, we increased the prizes yet again.]
+
+## Additional hints
+
+We may offer additional hints at some point in August or September. The hints will most likely be initial bits of a fast hash of the solutions. The nature of the hints is under discussion in [this forum topic](https://discussions.agilebits.com/discussion/89318/world-password-day-cracking-challenge/p1).
 
 ## Rules
 
@@ -90,15 +94,15 @@ The game is afoot.
 
 Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-05-03:20:33:44 UTC
 
-ID         |  Status   |  Successful password      | Submission date | By whom       | Place | Write-up location
-:----------|-----------|:--------------------------|-----------------|:--------------|-------|:-----------------
-3UOKUEBO   | Sample    | governor washout beak     | N/A             | Sample        | 0th   | N/A
-AJPYJUTN   | Sample    | glassy ubiquity absence   | N/A             | Sample        | 0th   | N/A
-IV2DL67Q   | Sample    | splendor excel rarefy     | N/A             | Sample        | 0th   | N/A
-NO4VRU4S   | Not found |                           |                 |               | Nth   |
-33YRS77A   | Not found |                           |                 |               | Nth   |
-J6J4QUWQ   | Not found |                           |                 |               | Nth   |
-SFELTO3W   | Not found |                           |                 |               | Nth   |
-DOHB6DC7   | Not found |                           |                 |               | Nth   |
-2SB5OP3G   | Not found |                           |                 |               | Nth   |
-5BSLBTKR   | Not found |                           |                 |               | Nth   |
+ID         |  Status   |  Successful password      | Hint | Submission date | By whom       | Place | Write-up location
+:----------|-----------|:--------------------------|:-----|-----------------|:--------------|-------|:-----------------
+3UOKUEBO   | Sample    | governor washout beak     |      | N/A             | Sample        | 0th   | N/A
+AJPYJUTN   | Sample    | glassy ubiquity absence   |      | N/A             | Sample        | 0th   | N/A
+IV2DL67Q   | Sample    | splendor excel rarefy     |      | N/A             | Sample        | 0th   | N/A
+NO4VRU4S   | Not found |                           |      |                 |               | Nth   |
+33YRS77A   | Not found |                           |      |                 |               | Nth   |
+J6J4QUWQ   | Not found |                           |      |                 |               | Nth   |
+SFELTO3W   | Not found |                           |      |                 |               | Nth   |
+DOHB6DC7   | Not found |                           |      |                 |               | Nth   |
+2SB5OP3G   | Not found |                           |      |                 |               | Nth   |
+5BSLBTKR   | Not found |                           |      |                 |               | Nth   |
