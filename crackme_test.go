@@ -52,3 +52,51 @@ func (tvec TestVector) String() string {
 
 	return r
 }
+
+func TestBitHint(t *testing.T) {
+	type vec struct {
+		in       string
+		bits     uint8
+		expected string
+	}
+
+	/* For tests I need the first byte of the sha256 hash of some strings
+
+	Using
+
+		for p in one two three four; do
+			h=$(echo -n $p | shasum -a256 | cut -b1-2)
+			echo "$p:  $h"
+		done
+
+	I got
+
+		one:  76
+		two:  3f
+		three:  8b
+		four:  04
+	*/
+
+	vecs := []vec{
+		{"one", 1, "0b0"},
+		{"two", 1, "0b0"},
+		{"three", 1, "0b1"},
+		{"four", 1, "0b0"},
+		{"one", 2, "0b01"},
+		{"two", 2, "0b00"},
+		{"three", 2, "0b10"},
+		{"four", 2, "0b00"},
+		{"one", 3, "0b011"},
+		{"two", 3, "0b001"},
+		{"three", 3, "0b100"},
+		{"four", 3, "0b000"},
+	}
+
+	for _, v := range vecs {
+		result := makeBitHint(v.in, v.bits)
+		if result != v.expected {
+			t.Errorf("For s = %q expected %q but got %q", v.in, v.expected, result)
+		}
+	}
+
+}

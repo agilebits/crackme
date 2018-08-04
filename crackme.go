@@ -74,7 +74,7 @@ func (c *Challenge) DeriveKey() ([]byte, error) {
 
 // FleshOut takes what exists within a challenge and fills in defaults and other
 // fields based on what is there.
-func (c *Challenge) FleshOut(bits int) {
+func (c *Challenge) FleshOut(bits uint8) {
 	if c.Rounds == 0 {
 		c.Rounds = DefaultRounds
 	}
@@ -111,12 +111,12 @@ func (c *Challenge) FleshOut(bits int) {
 		c.ID = MakeID(c.Salt)
 	}
 	if bits != 0 {
-		c.BitHint = c.makeBitHint(bits)
+		c.BitHint = makeBitHint(c.Pwd, bits)
 	}
 
 }
 
-func (c Challenge) makeBitHint(bits int) string {
+func makeBitHint(s string, bits uint8) string {
 	if bits < 1 {
 		return "0b"
 	}
@@ -124,13 +124,16 @@ func (c Challenge) makeBitHint(bits int) string {
 		bits = 8
 	}
 	h := sha256.New()
-	h.Write([]byte(c.Pwd))
+	h.Write([]byte(s))
 	lead := h.Sum(nil)[0]
 
 	// will right shift lead by 8 - bits
+	lead >>= 8 - bits
 
 	// then print result to bits places
-
+	fmtString := fmt.Sprintf("0b%%0%db", bits)
+	out := fmt.Sprintf(fmtString, lead)
+	return out
 }
 
 func (c *Challenge) String() string {
