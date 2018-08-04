@@ -28,6 +28,7 @@ type Challenge struct {
 	SaltHex  string `json:"salt"`
 	DkHex    string `json:"derived,omitempty"`
 	Pwd      string `json:"pwd,omitempty"`
+	BitHint  string `json:"bitHint,omitempty"`
 
 	KeyLen  int    `json:"-"`
 	Salt    []byte `json:"-"`
@@ -73,7 +74,7 @@ func (c *Challenge) DeriveKey() ([]byte, error) {
 
 // FleshOut takes what exists within a challenge and fills in defaults and other
 // fields based on what is there.
-func (c *Challenge) FleshOut() {
+func (c *Challenge) FleshOut(bits int) {
 	if c.Rounds == 0 {
 		c.Rounds = DefaultRounds
 	}
@@ -109,6 +110,27 @@ func (c *Challenge) FleshOut() {
 		// By taking a multiple of five bytes, we get base32 encoding without padding
 		c.ID = MakeID(c.Salt)
 	}
+	if bits != 0 {
+		c.BitHint = c.makeBitHint(bits)
+	}
+
+}
+
+func (c Challenge) makeBitHint(bits int) string {
+	if bits < 1 {
+		return "0b"
+	}
+	if bits > 8 {
+		bits = 8
+	}
+	h := sha256.New()
+	h.Write([]byte(c.Pwd))
+	lead := h.Sum(nil)[0]
+
+	// will right shift lead by 8 - bits
+
+	// then print result to bits places
+
 }
 
 func (c *Challenge) String() string {

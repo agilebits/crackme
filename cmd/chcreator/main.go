@@ -15,6 +15,7 @@ import (
 
 var withPwds = flag.Bool("p", false, "Output should contain all passwords")
 var testKeys = flag.Bool("t", false, "Test whether input derived keys match calculated")
+var hintBits = flag.Int("b", 0, "bits of hint to be offered")
 
 func main() {
 	flag.Parse()
@@ -26,7 +27,7 @@ func main() {
 	challenges := getChallenges()
 
 	for _, c := range challenges {
-		c.FleshOut()
+		c.FleshOut(*hintBits)
 
 		if *testKeys {
 			if c.Dk != nil {
