@@ -70,7 +70,9 @@ If no correct submission has been submitted within one month, we _may_ increasin
 
 ## Additional hints
 
-We may offer additional hints at some point in August or September. The hints will most likely be initial bits of a fast hash of the solutions. The nature of the hints is under discussion in [this forum topic](https://discussions.agilebits.com/discussion/89318/world-password-day-cracking-challenge/p1).
+We may offer additional hints at some point in August or September.
+The hints will be initial bit(s) of a SHA256 unsalted hash of the password.
+The nature of the hints has been under discussion in [this forum topic](https://discussions.agilebits.com/discussion/89318/world-password-day-cracking-challenge/p1).
 
 ## Rules
 
@@ -96,9 +98,9 @@ Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-05-03:20:33:44 UTC
 
 ID         |  Status   |  Successful password      | Hint | Submission date | By whom       | Place | Write-up location
 :----------|-----------|:--------------------------|:-----|-----------------|:--------------|-------|:-----------------
-3UOKUEBO   | Sample    | governor washout beak     |      | N/A             | Sample        | 0th   | N/A
-AJPYJUTN   | Sample    | glassy ubiquity absence   |      | N/A             | Sample        | 0th   | N/A
-IV2DL67Q   | Sample    | splendor excel rarefy     |      | N/A             | Sample        | 0th   | N/A
+3UOKUEBO   | Sample    | governor washout beak     | 0b0  | N/A             | Sample        | 0th   | N/A
+AJPYJUTN   | Sample    | glassy ubiquity absence   | 0b1  | N/A             | Sample        | 0th   | N/A
+IV2DL67Q   | Sample    | splendor excel rarefy     | 0b0  | N/A             | Sample        | 0th   | N/A
 NO4VRU4S   | Not found |                           |      |                 |               | Nth   |
 33YRS77A   | Not found |                           |      |                 |               | Nth   |
 J6J4QUWQ   | Not found |                           |      |                 |               | Nth   |
