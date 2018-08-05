@@ -58,12 +58,10 @@ func main() {
 		}
 	}
 
-	log.Printf("bFlag is %d\n", *hintBits)
 	if *hintBits > 0 {
 		for _, c := range challenges {
 			if c.Pwd != "" {
 				c.BitHint = crackme.MakeBitHint(c.Pwd, *hintBits)
-				log.Printf("%s: %s\n", c.ID, c.BitHint)
 			}
 		}
 	}
