@@ -56,7 +56,7 @@ func (tvec TestVector) String() string {
 func TestBitHint(t *testing.T) {
 	type vec struct {
 		in       string
-		bits     uint8
+		bits     int
 		expected string
 	}
 
@@ -64,7 +64,7 @@ func TestBitHint(t *testing.T) {
 
 	Using
 
-		for p in one two three four; do
+		for p in one two three four "governor washout beak" "glassy ubiquity absence" "splendor excel rarefy"; do
 			h=$(echo -n $p | shasum -a256 | cut -b1-2)
 			echo "$p:  $h"
 		done
@@ -82,18 +82,32 @@ func TestBitHint(t *testing.T) {
 		{"two", 1, "0b0"},
 		{"three", 1, "0b1"},
 		{"four", 1, "0b0"},
+
 		{"one", 2, "0b01"},
 		{"two", 2, "0b00"},
 		{"three", 2, "0b10"},
 		{"four", 2, "0b00"},
+
 		{"one", 3, "0b011"},
 		{"two", 3, "0b001"},
 		{"three", 3, "0b100"},
 		{"four", 3, "0b000"},
+
+		{"governor washout beak", 1, "0b0"},
+		{"glassy ubiquity absence", 1, "0b1"},
+		{"splendor excel rarefy", 1, "0b0"},
+
+		{"governor washout beak", 2, "0b01"},
+		{"glassy ubiquity absence", 2, "0b11"},
+		{"splendor excel rarefy", 2, "0b01"},
+
+		{"governor washout beak", 3, "0b011"},
+		{"glassy ubiquity absence", 3, "0b111"},
+		{"splendor excel rarefy", 3, "0b010"},
 	}
 
 	for _, v := range vecs {
-		result := makeBitHint(v.in, v.bits)
+		result := MakeBitHint(v.in, v.bits)
 		if result != v.expected {
 			t.Errorf("For s = %q expected %q but got %q", v.in, v.expected, result)
 		}

@@ -114,7 +114,7 @@ func (c *Challenge) FleshOut() {
 
 // MakeBitHint returns a string representing the first bits bits of the
 // SHA256 hash of the string
-func MakeBitHint(s string, bits uint8) string {
+func MakeBitHint(s string, bits int) string {
 	if bits < 1 {
 		return "0b"
 	}
@@ -126,7 +126,7 @@ func MakeBitHint(s string, bits uint8) string {
 	lead := h.Sum(nil)[0]
 
 	// will right shift lead by 8 - bits
-	lead >>= 8 - bits
+	lead >>= 8 - uint(bits)
 
 	// then print result to bits places
 	fmtString := fmt.Sprintf("0b%%0%db", bits)

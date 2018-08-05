@@ -1,3 +1,4 @@
+// +build debug
 package main
 
 import (
@@ -17,7 +18,6 @@ var withPwds = flag.Bool("p", false, "Output should contain all passwords")
 var testKeys = flag.Bool("t", false, "Test whether input derived keys match calculated")
 var hintBits = flag.Int("b", 0, "bits of hint to be offered")
 var fileFlag = flag.String("f", "", "input file name")
-var bFlag = uint8(*hintBits)
 
 func main() {
 	flag.Parse()
@@ -58,10 +58,12 @@ func main() {
 		}
 	}
 
-	if bFlag > 0 {
+	log.Printf("bFlag is %d\n", *hintBits)
+	if *hintBits > 0 {
 		for _, c := range challenges {
 			if c.Pwd != "" {
-				c.BitHint = crackme.MakeBitHint(c.Pwd, bFlag)
+				c.BitHint = crackme.MakeBitHint(c.Pwd, *hintBits)
+				log.Printf("%s: %s\n", c.ID, c.BitHint)
 			}
 		}
 	}
