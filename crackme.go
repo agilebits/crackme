@@ -74,7 +74,7 @@ func (c *Challenge) DeriveKey() ([]byte, error) {
 
 // FleshOut takes what exists within a challenge and fills in defaults and other
 // fields based on what is there.
-func (c *Challenge) FleshOut(bits uint8) {
+func (c *Challenge) FleshOut() {
 	if c.Rounds == 0 {
 		c.Rounds = DefaultRounds
 	}
@@ -110,13 +110,11 @@ func (c *Challenge) FleshOut(bits uint8) {
 		// By taking a multiple of five bytes, we get base32 encoding without padding
 		c.ID = MakeID(c.Salt)
 	}
-	if bits != 0 {
-		c.BitHint = makeBitHint(c.Pwd, bits)
-	}
-
 }
 
-func makeBitHint(s string, bits uint8) string {
+// MakeBitHint returns a string representing the first bits bits of the
+// SHA256 hash of the string
+func MakeBitHint(s string, bits uint8) string {
 	if bits < 1 {
 		return "0b"
 	}

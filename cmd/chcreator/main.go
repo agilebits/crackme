@@ -16,6 +16,8 @@ import (
 var withPwds = flag.Bool("p", false, "Output should contain all passwords")
 var testKeys = flag.Bool("t", false, "Test whether input derived keys match calculated")
 var hintBits = flag.Int("b", 0, "bits of hint to be offered")
+var fileFlag = flag.String("f", "", "input file name")
+var bFlag = uint8(*hintBits)
 
 func main() {
 	flag.Parse()
@@ -24,10 +26,10 @@ func main() {
 	dkCnt := 0
 	// wFilePath := "Resources/AgileWords.txt"
 
-	challenges := getChallenges()
+	challenges := getChallenges(*fileFlag)
 
 	for _, c := range challenges {
-		c.FleshOut(*hintBits)
+		c.FleshOut()
 
 		if *testKeys {
 			if c.Dk != nil {
@@ -55,6 +57,14 @@ func main() {
 			os.Exit(0)
 		}
 	}
+
+	if bFlag > 0 {
+		for _, c := range challenges {
+			if c.Pwd != "" {
+				c.BitHint = crackme.MakeBitHint(c.Pwd, bFlag)
+			}
+		}
+	}
 	// else if not just testing keys, we prepare output
 
 	for _, c := range challenges {
@@ -71,12 +81,21 @@ func main() {
 	os.Exit(0)
 }
 
-func getChallenges() []*crackme.Challenge {
-	scanner := bufio.NewScanner(os.Stdin)
+func getChallenges(fName string) []*crackme.Challenge {
+	f := os.Stdin
+	if len(fName) != 0 {
+		fx, err := os.Open(fName)
+		if err != nil {
+			log.Fatalf("Couldn't open %q: %v", fName, err)
+		}
+		f = fx // Weird scoping workaround
+	}
+	scanner := bufio.NewScanner(f)
 	var fText []byte
 	for scanner.Scan() {
 		fText = append(fText, scanner.Bytes()...)
 	}
+	f.Close()
 
 	result := new([]*crackme.Challenge)
 	if err := json.Unmarshal(fText, result); err != nil {
