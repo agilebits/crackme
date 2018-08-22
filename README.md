@@ -101,10 +101,10 @@ ID         |  Status   |  Successful password      | Hint | Submission date | By
 3UOKUEBO   | Sample    | governor washout beak     | 0b0  | N/A             | Sample        | 0th   | N/A
 AJPYJUTN   | Sample    | glassy ubiquity absence   | 0b1  | N/A             | Sample        | 0th   | N/A
 IV2DL67Q   | Sample    | splendor excel rarefy     | 0b0  | N/A             | Sample        | 0th   | N/A
-NO4VRU4S   | Not found |                           |      |                 |               | Nth   |
-33YRS77A   | Not found |                           |      |                 |               | Nth   |
-J6J4QUWQ   | Not found |                           |      |                 |               | Nth   |
-SFELTO3W   | Not found |                           |      |                 |               | Nth   |
-DOHB6DC7   | Not found |                           |      |                 |               | Nth   |
-2SB5OP3G   | Not found |                           |      |                 |               | Nth   |
-5BSLBTKR   | Not found |                           |      |                 |               | Nth   |
+NO4VRU4S   | Not found |                           | 0b1  |                 |               | Nth   |
+33YRS77A   | Not found |                           | 0b0  |                 |               | Nth   |
+J6J4QUWQ   | Not found |                           | 0b0  |                 |               | Nth   |
+SFELTO3W   | Not found |                           | 0b0  |                 |               | Nth   |
+DOHB6DC7   | Not found |                           | 0b0  |                 |               | Nth   |
+2SB5OP3G   | Not found |                           | 0b0  |                 |               | Nth   |
+5BSLBTKR   | Not found |                           | 0b1  |                 |               | Nth   |
