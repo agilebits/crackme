@@ -70,9 +70,16 @@ If no correct submission has been submitted within one month, we _may_ increasin
 
 ## Additional hints
 
+On August 23, 2018, we published an updated challenge file with 1 bit hints. This lists the first bit of the unsalted SHA1 hash of the solution.
+
+The file with these hints is at 
 We may offer additional hints at some point in August or September.
 The hints will be initial bit(s) of a SHA256 unsalted hash of the password.
 The nature of the hints has been under discussion in [this forum topic](https://discussions.agilebits.com/discussion/89318/world-password-day-cracking-challenge/p1).
+
+https://github.com/agilebits/crackme/tree/master/password-day-2018-1bitHints.json
+
+
 
 ## Rules
 
@@ -88,23 +95,26 @@ Announcement of forthcoming challenge (when this and associated documents are pu
 
 Start of contest. Publication of the actual challenges: Noon, EDT on World Password Day, May 3, 2018. 2018-05-03 16:00:00 +0000 UTC
 
-The challenge will be published at that time at https://github.com/agilebits/crackme/tree/master/password-day-2018.json
+The challenge was published at that time at https://github.com/agilebits/crackme/tree/master/password-day-2018.json
+
+Note that a file with 1 bit hints is at 
+https://github.com/agilebits/crackme/tree/master/password-day-2018-1bitHints.json
 
 ## Contest status
 
 The game is afoot.
 
-Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-05-03:20:33:44 UTC
+Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-08-22:22:09:01 UTC 
 
 ID         |  Status   |  Successful password      | Hint | Submission date | By whom       | Place | Write-up location
 :----------|-----------|:--------------------------|:-----|-----------------|:--------------|-------|:-----------------
 3UOKUEBO   | Sample    | governor washout beak     | 0b0  | N/A             | Sample        | 0th   | N/A
 AJPYJUTN   | Sample    | glassy ubiquity absence   | 0b1  | N/A             | Sample        | 0th   | N/A
 IV2DL67Q   | Sample    | splendor excel rarefy     | 0b0  | N/A             | Sample        | 0th   | N/A
-NO4VRU4S   | Not found |                           |      |                 |               | Nth   |
-33YRS77A   | Not found |                           |      |                 |               | Nth   |
-J6J4QUWQ   | Not found |                           |      |                 |               | Nth   |
-SFELTO3W   | Not found |                           |      |                 |               | Nth   |
-DOHB6DC7   | Not found |                           |      |                 |               | Nth   |
-2SB5OP3G   | Not found |                           |      |                 |               | Nth   |
-5BSLBTKR   | Not found |                           |      |                 |               | Nth   |
+NO4VRU4S   | Not found |                           | 0b1  |                 |               | Nth   |
+33YRS77A   | Not found |                           | 0b0  |                 |               | Nth   |
+J6J4QUWQ   | Not found |                           | 0b0  |                 |               | Nth   |
+SFELTO3W   | Not found |                           | 0b0  |                 |               | Nth   |
+DOHB6DC7   | Not found |                           | 0b0  |                 |               | Nth   |
+2SB5OP3G   | Not found |                           | 0b0  |                 |               | Nth   |
+5BSLBTKR   | Not found |                           | 0b1  |                 |               | Nth   |
