@@ -70,7 +70,7 @@ If no correct submission has been submitted within one month, we _may_ increasin
 
 ## Additional hints
 
-On August 23, 2018, we published an updated challenge file with 1 bit hints. This lists the first bit of the unsalted SHA1 hash of the solution.
+On August 23, 2018, we published an updated challenge file with 1 bit hints. This lists the first bit of the unsalted SHA256 hash of the solution.
 
 The file with these hints is at 
 We may offer additional hints at some point in August or September.
