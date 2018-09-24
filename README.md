@@ -72,13 +72,16 @@ If no correct submission has been submitted within one month, we _may_ increasin
 
 On August 23, 2018, we published an updated challenge file with 1 bit hints. This lists the first bit of the unsalted SHA256 hash of the solution.
 
+On September 24, 2018, we published an updated challenge file with 2 bit hits. This lists the first two bits of the unsalted SHA256 hash of the solution.
+
 The file with these hints is at 
-We may offer additional hints at some point in August or September.
 The hints will be initial bit(s) of a SHA256 unsalted hash of the password.
 The nature of the hints has been under discussion in [this forum topic](https://discussions.agilebits.com/discussion/89318/world-password-day-cracking-challenge/p1).
 
-https://github.com/agilebits/crackme/tree/master/password-day-2018-1bitHints.json
-
+Description | File | Signature file |
+-----------------|:----------------------------------------|:-----------------------------------
+1 bit hints | [password-day-2018-1bitHints.json](https://github.com/agilebits/crackme/tree/master/password-day-2018-1bitHints.json) | [password-day-2018-1bitHints.json.asc](https://github.com/agilebits/crackme/blob/master/password-day-2018-1bitHints.json.asc) |
+2 bit hints | [password-day-2018-2bit-hints.json](https://github.com/agilebits/crackme/tree/master/password-day-2018-2bit-hints.json) | [password-day-2018-2bit-hints.json.asc](https://github.com/agilebits/crackme/tree/master/password-day-2018-2bit-hints.json.asc) |
 
 
 ## Rules
@@ -108,9 +111,9 @@ Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-08-22:22:09:01 UTC
 
 ID         |  Status   |  Successful password      | Hint | Submission date | By whom       | Place | Write-up location
 :----------|-----------|:--------------------------|:-----|-----------------|:--------------|-------|:-----------------
-3UOKUEBO   | Sample    | governor washout beak     | 0b0  | N/A             | Sample        | 0th   | N/A
-AJPYJUTN   | Sample    | glassy ubiquity absence   | 0b1  | N/A             | Sample        | 0th   | N/A
-IV2DL67Q   | Sample    | splendor excel rarefy     | 0b0  | N/A             | Sample        | 0th   | N/A
+3UOKUEBO   | Sample    | governor washout beak     | 0b01 | N/A             | Sample        | 0th   | N/A
+AJPYJUTN   | Sample    | glassy ubiquity absence   | 0b11 | N/A             | Sample        | 0th   | N/A
+IV2DL67Q   | Sample    | splendor excel rarefy     | 0b01 | N/A             | Sample        | 0th   | N/A
 NO4VRU4S   | Not found |                           | 0b1  |                 |               | Nth   |
 33YRS77A   | Not found |                           | 0b0  |                 |               | Nth   |
 J6J4QUWQ   | Not found |                           | 0b0  |                 |               | Nth   |
