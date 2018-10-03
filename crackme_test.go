@@ -75,9 +75,27 @@ func TestBitHint(t *testing.T) {
 		two:  3f
 		three:  8b
 		four:  04
+		governor washout beak:  7a
+		glassy ubiquity absence:  e6
+		splendor excel rarefy:  40
 	*/
 
 	vecs := []vec{
+
+		{"one", 8, "0b01110110"},   // 0x76
+		{"two", 8, "0b00111111"},   // 0x3f
+		{"three", 8, "0b10001011"}, // 0x8b
+		{"four", 8, "0b00000100"},  // 0x04
+
+		{"governor washout beak", 8, "0b01111010"},   // 0x7a
+		{"glassy ubiquity absence", 8, "0b11100110"}, // 0xe6
+		{"splendor excel rarefy", 8, "0b01000000"},   // 0x40
+
+		{"one", 5, "0b01110"},   // 0x76
+		{"two", 5, "0b00111"},   // 0x3f
+		{"three", 5, "0b10001"}, // 0x8b
+		{"four", 5, "0b00000"},  // 0x04
+
 		{"one", 1, "0b0"},
 		{"two", 1, "0b0"},
 		{"three", 1, "0b1"},
@@ -93,6 +111,11 @@ func TestBitHint(t *testing.T) {
 		{"three", 3, "0b100"},
 		{"four", 3, "0b000"},
 
+		{"one", 4, "0b0111"},
+		{"two", 4, "0b0011"},
+		{"three", 4, "0b1000"},
+		{"four", 4, "0b0000"},
+
 		{"governor washout beak", 1, "0b0"},
 		{"glassy ubiquity absence", 1, "0b1"},
 		{"splendor excel rarefy", 1, "0b0"},
@@ -104,6 +127,14 @@ func TestBitHint(t *testing.T) {
 		{"governor washout beak", 3, "0b011"},
 		{"glassy ubiquity absence", 3, "0b111"},
 		{"splendor excel rarefy", 3, "0b010"},
+
+		{"governor washout beak", 4, "0b0111"},
+		{"glassy ubiquity absence", 4, "0b1110"},
+		{"splendor excel rarefy", 4, "0b0100"},
+
+		{"governor washout beak", 5, "0b01111"},   // 0x7a
+		{"glassy ubiquity absence", 5, "0b11100"}, // 0xe6
+		{"splendor excel rarefy", 5, "0b01000"},   // 0x40
 	}
 
 	for _, v := range vecs {
