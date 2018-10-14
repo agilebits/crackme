@@ -1,0 +1,11 @@
+[
+	{
+		"id": "DOHB6DC7",
+		"hint": "3 words",
+		"prf": "HMAC-SHA256",
+		"rounds": 100000,
+		"salt": "9dc661ec09c948dd16710439d157cef2",
+		"derived": "4073c5e1cbd7790347b26e0447795220cd933689219b3446da294f509a583d48",
+		"pwd": "mansard humpback unbutton"
+	}
+]
