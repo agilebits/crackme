@@ -1,0 +1,11 @@
+[
+    {
+        "id": "SFELTO3W",
+        "hint": "3 words",
+        "prf": "HMAC-SHA256",
+        "rounds": 100000,
+        "salt": "6666420e86cba2ae7c9f67358f00d258",
+        "derived": "03758c0fcb5388046c2bc954afe2aeadb8f2ac5296df00c35dd5aea924fa3146",
+        "pwd": "faint bust perturb"
+    }
+]

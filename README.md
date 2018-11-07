@@ -117,7 +117,7 @@ IV2DL67Q   | Sample    | splendor excel rarefy     | 0b01 | N/A             | Sa
 NO4VRU4S   | Not found |                           | 0b10 |                 |               | Nth   |
 33YRS77A   | Not found |                           | 0b01 |                 |               | Nth   |
 J6J4QUWQ   | Not found |                           | 0b01 |                 |               | Nth   |
-SFELTO3W   | Not found |                           | 0b00 |                 |               | Nth   |
-DOHB6DC7   | Found| mansard humpback unbutton   | 0b00 | 2018-10-14   |  TBA              | 1st   | TBA
+SFELTO3W   | Found |  faint bust perturb           | 0b00 | 2018-11-07      |               | 2nd   |
+DOHB6DC7   | Found| mansard humpback unbutton   | 0b00 | 2018-10-14   |  TBA              | 1st   | [write up](./write-ups/DOHB6DC7.md)
 2SB5OP3G   | Not found |                           | 0b00 |                 |               | Nth   |
 5BSLBTKR   | Not found |                           | 0b10 |                 |               | Nth   |
