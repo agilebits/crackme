@@ -1,0 +1,11 @@
+[
+	{
+		"id": "2SB5OP3G",
+		"hint": "3 words",
+		"prf": "HMAC-SHA256",
+		"rounds": 100000,
+		"salt": "cabf338a39b44100df4d308bdf59e77e",
+		"derived": "42ea3baae191202978d7b8f9017962bab6a7a9296a69cb25b25bbfbf31bd50a8",
+		"pwd": "befell car granary"
+	}
+]
