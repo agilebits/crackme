@@ -117,7 +117,7 @@ IV2DL67Q  | Sample    | splendor excel rarefy     | 0b01 | N/A             | Sam
 NO4VRU4S  | Not found |                           | 0b10 |                 |               | Nth   |
 33YRS77A  | Not found |                           | 0b01 |                 |               | Nth   |
 J6J4QUWQ  | Not found |                           | 0b01 |                 |               | Nth   |
-SFELTO3W  | Found     | faint bust perturb        | 0b00 | 2018-11-07      | [List](https://github.com/s3inlc/crackme/blob/master/write-ups/DOHB6DC7.md#members)      | 2nd   | [write up](./write-ups/SFELTO3W.md)
-DOHB6DC7  | Found     | mansard humpback unbutton | 0b00 | 2018-10-14      | [List](https://github.com/s3inlc/crackme/blob/master/write-ups/SFELTO3W.md#members)      | 1st   | [write up](./write-ups/DOHB6DC7.md)
+SFELTO3W  | Found     | faint bust perturb        | 0b00 | 2018-11-07      | [List](https://github.com/s3inlc/crackme/blob/master/write-ups/SFELTO3W.md#members)      | 2nd   | [write up](./write-ups/SFELTO3W.md)
+DOHB6DC7  | Found     | mansard humpback unbutton | 0b00 | 2018-10-14      | [List](https://github.com/s3inlc/crackme/blob/master/write-ups/DOHB6DC7.md#members)      | 1st   | [write up](./write-ups/DOHB6DC7.md)
 2SB5OP3G  | Found     | befell car granary        | 0b00 | 2018-11-10      | TBA           | 3rd   | 
 5BSLBTKR  | Not found |                           | 0b10 |                 |               | Nth   |
