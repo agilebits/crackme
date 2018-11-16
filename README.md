@@ -107,17 +107,17 @@ https://github.com/agilebits/crackme/tree/master/password-day-2018-1bitHints.jso
 
 The game is afoot.
 
-Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-11-11:01:23:42 UTC
+Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-11-15:22:34:22 UTC
 
-ID         |  Status   |  Successful password      | Hint | Submission date | By whom       | Place | Write-up location
-:----------|-----------|:--------------------------|:-----|-----------------|:--------------|-------|:-----------------
-3UOKUEBO   | Sample    | governor washout beak     | 0b01 | N/A             | Sample        | 0th   | N/A
-AJPYJUTN   | Sample    | glassy ubiquity absence   | 0b11 | N/A             | Sample        | 0th   | N/A
-IV2DL67Q   | Sample    | splendor excel rarefy     | 0b01 | N/A             | Sample        | 0th   | N/A
-NO4VRU4S   | Not found |                           | 0b10 |                 |               | Nth   |
-33YRS77A   | Not found |                           | 0b01 |                 |               | Nth   |
-J6J4QUWQ   | Not found |                           | 0b01 |                 |               | Nth   |
-SFELTO3W   | Found |  faint bust perturb           | 0b00 | 2018-11-07      |               | 2nd   |
-DOHB6DC7   | Found| mansard humpback unbutton   | 0b00 | 2018-10-14   |  TBA              | 1st   | [write up](./write-ups/DOHB6DC7.md)
-2SB5OP3G   | Found |     befell car granary     | 0b00 | 2018-11-10      |               | 3rd   |
-5BSLBTKR   | Not found |                           | 0b10 |                 |               | Nth   |
+ID        |  Status   |  Successful password      | Hint | Submission date | By whom       | Place | Write-up location
+:---------|-----------|:--------------------------|:-----|-----------------|:--------------|-------|:-----------------
+3UOKUEBO  | Sample    | governor washout beak     | 0b01 | N/A             | Sample        | 0th   | N/A
+AJPYJUTN  | Sample    | glassy ubiquity absence   | 0b11 | N/A             | Sample        | 0th   | N/A
+IV2DL67Q  | Sample    | splendor excel rarefy     | 0b01 | N/A             | Sample        | 0th   | N/A
+NO4VRU4S  | Not found |                           | 0b10 |                 |               | Nth   |
+33YRS77A  | Not found |                           | 0b01 |                 |               | Nth   |
+J6J4QUWQ  | Not found |                           | 0b01 |                 |               | Nth   |
+SFELTO3W  | Found     | faint bust perturb        | 0b00 | 2018-11-07      | [List](https://github.com/s3inlc/crackme/blob/master/write-ups/SFELTO3W.md#members)      | 2nd   | [write up](./write-ups/SFELTO3W.md)
+DOHB6DC7  | Found     | mansard humpback unbutton | 0b00 | 2018-10-14      | [List](https://github.com/s3inlc/crackme/blob/master/write-ups/DOHB6DC7.md#members)      | 1st   | [write up](./write-ups/DOHB6DC7.md)
+2SB5OP3G  | Found     | befell car granary        | 0b00 | 2018-11-10      | TBA           | 3rd   | 
+5BSLBTKR  | Not found |                           | 0b10 |                 |               | Nth   |
