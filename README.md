@@ -80,8 +80,8 @@ The nature of the hints has been under discussion in [this forum topic](https://
 
 Description | File | Signature file |
 -----------------|:----------------------------------------|:-----------------------------------
-1 bit hints | [password-day-2018-1bitHints.json](https://github.com/agilebits/crackme/tree/master/password-day-2018-1bitHints.json) | [password-day-2018-1bitHints.json.asc](https://github.com/agilebits/crackme/blob/master/password-day-2018-1bitHints.json.asc) |
-2 bit hints | [password-day-2018-2bit-hints.json](https://github.com/agilebits/crackme/tree/master/password-day-2018-2bit-hints.json) | [password-day-2018-2bit-hints.json.asc](https://github.com/agilebits/crackme/tree/master/password-day-2018-2bit-hints.json.asc) |
+1 bit hints | [password-day-2018-1bitHints.json](./password-day-2018-1bitHints.json) | [password-day-2018-1bitHints.json.asc](./password-day-2018-1bitHints.json.asc) |
+2 bit hints | [password-day-2018-2bit-hints.json](./password-day-2018-2bit-hints.json) | [password-day-2018-2bit-hints.json.asc](./password-day-2018-2bit-hints.json.asc) |
 
 
 ## Rules
@@ -117,7 +117,7 @@ IV2DL67Q  | Sample    | splendor excel rarefy     | 0b01 | N/A             | Sam
 NO4VRU4S  | Not found |                           | 0b10 |                 |               | Nth   |
 33YRS77A  | Not found |                           | 0b01 |                 |               | Nth   |
 J6J4QUWQ  | Not found |                           | 0b01 |                 |               | Nth   |
-SFELTO3W  | Found     | faint bust perturb        | 0b00 | 2018-11-07      | [List](https://github.com/s3inlc/crackme/blob/master/write-ups/SFELTO3W.md#members)      | 2nd   | [write up](./write-ups/SFELTO3W.md)
-DOHB6DC7  | Found     | mansard humpback unbutton | 0b00 | 2018-10-14      | [List](https://github.com/s3inlc/crackme/blob/master/write-ups/DOHB6DC7.md#members)      | 1st   | [write up](./write-ups/DOHB6DC7.md)
+SFELTO3W  | Found     | faint bust perturb        | 0b00 | 2018-11-07      | [List](./write-ups/SFELTO3W.md#members)      | 2nd   | [write up](./write-ups/SFELTO3W.md)
+DOHB6DC7  | Found     | mansard humpback unbutton | 0b00 | 2018-10-14      | [List](./write-ups/DOHB6DC7.md#members)      | 1st   | [write up](./write-ups/DOHB6DC7.md)
 2SB5OP3G  | Found     | befell car granary        | 0b00 | 2018-11-10      | TBA           | 3rd   | 
 5BSLBTKR  | Not found |                           | 0b10 |                 |               | Nth   |
