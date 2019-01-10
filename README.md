@@ -105,9 +105,9 @@ https://github.com/agilebits/crackme/tree/master/password-day-2018-1bitHints.jso
 
 ## Contest status
 
-The game is afoot.
+All prize winning targets (1st through 4th place) have been found. There will be no prize awards for 5th through 7th place.
 
-Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2018-11-15:22:34:22 UTC
+Last update: <!-- date -u "+%Y-%m-%d:%H:%M:%S UTC" --> 2019-01-10:17:45:13 UTC
 
 ID        |  Status   |  Successful password      | Hint | Submission date | By whom       | Place | Write-up location
 :---------|-----------|:--------------------------|:-----|-----------------|:--------------|-------|:-----------------
