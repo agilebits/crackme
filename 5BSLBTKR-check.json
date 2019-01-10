@@ -1,0 +1,11 @@
+[
+    {
+		"id": "5BSLBTKR",
+		"hint": "3 words",
+		"prf": "HMAC-SHA256",
+		"rounds": 100000,
+		"salt": "c25197a8cb0e5dab3aa712c62e766efb",
+        "derived": "bd2ad069b4e4e35e1bc081269ae459532a34b7971d4c214e4639101fc489f325",
+        "pwd": "minute judd obedient"
+	}
+]

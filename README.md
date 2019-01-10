@@ -120,4 +120,4 @@ J6J4QUWQ  | Not found |                           | 0b01 |                 |    
 SFELTO3W  | Found     | faint bust perturb        | 0b00 | 2018-11-07      | [List](./write-ups/SFELTO3W.md#members)      | 2nd   | [write up](./write-ups/SFELTO3W.md)
 DOHB6DC7  | Found     | mansard humpback unbutton | 0b00 | 2018-10-14      | [List](./write-ups/DOHB6DC7.md#members)      | 1st   | [write up](./write-ups/DOHB6DC7.md)
 2SB5OP3G  | Found     | befell car granary        | 0b00 | 2018-11-10      | TBA           | 3rd   | 
-5BSLBTKR  | Not found |                           | 0b10 |                 |               | Nth   |
+5BSLBTKR  | Found     | minute judd obedient      | 0b10 | 2019-01-10      | TBA           | 4th  |
