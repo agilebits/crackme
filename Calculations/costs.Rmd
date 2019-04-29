@@ -1,0 +1,46 @@
+---
+title: "Costs"
+author: "Jeffrey Goldberg"
+date: "4/29/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+## R Markdown
+
+We have [previously calculated](https://discussions.agilebits.com/discussion/comment/470503/#Comment_470503) the cost to check \(2^{32}\) guesses is six US dollars. At some point in the future that cost calculation should be put into this document. For now we will take that as a given constant.
+
+```{r USDper32bits}
+usdPer32bit <- 6.00
+```
+
+We will also use a simple function for getting from bits to cost to crack.
+
+```{r bits2cost}
+bits2cost <- function(b) {
+  usdPer32bit * 2^(b - 32)
+}
+```
+
+Now we should also create some data of different kinds of passwords generated in different ways.
+
+```{r wordlist}
+pwdKinds <- data.frame(
+  kind = c("3 word", "4 word", "5 word"),
+  bits = c(42.48, 56.65, 70.81),
+  sample = c("prithee-insured-buoyant", "align-caught-boycott-delete", "boo-canter-hayseed-grudging-screech"),
+  stringsAsFactors=FALSE)
+```
+
+Now lets compute the costs for the passwords kinds that we've created.
+
+```{r cost-comp}
+pwdKinds %>% 
+  mutate(cost = bits2cost(bits))
+```
