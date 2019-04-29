@@ -5,14 +5,18 @@ date: "4/29/2019"
 output: html_document
 ---
 
+## Prelimaries
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+R is a messy language. Let's find a more functional way to use it with [tidyverse](https://www.tidyverse.org).
+
 ```{r libraries, warning=FALSE, message=FALSE}
 library(tidyverse)
 ```
-## R Markdown
+
 
 We have [previously calculated](https://discussions.agilebits.com/discussion/comment/470503/#Comment_470503) the cost to check \(2^{32}\) guesses is six US dollars. At some point in the future that cost calculation should be put into this document. For now we will take that as a given constant.
 
@@ -20,7 +24,7 @@ We have [previously calculated](https://discussions.agilebits.com/discussion/com
 usdPer32bit <- 6.00
 ```
 
-We will also use a simple function for getting from bits to cost to crack.
+We will also use a simple function for getting from bits to cost to crack. If it turns out that the the name is only used in a few places, we can ditch its name and use it anonymously.
 
 ```{r bits2cost}
 bits2cost <- function(b) {
@@ -30,17 +34,29 @@ bits2cost <- function(b) {
 
 Now we should also create some data of different kinds of passwords generated in different ways.
 
-```{r wordlist}
-pwdKinds <- data.frame(
-  kind = c("3 word", "4 word", "5 word"),
-  bits = c(42.48, 56.65, 70.81),
-  sample = c("prithee-insured-buoyant", "align-caught-boycott-delete", "boo-canter-hayseed-grudging-screech"),
-  stringsAsFactors=FALSE)
+```{r pwds}
+pwd <- tribble(
+  ~kind,             ~bits,   ~sample,
+  "3 word",          42.48,   "prithee-insured-buoyant",
+  "4 word",          56.65,   "align-caught-boycott-delete",
+  "5 word",          70.81,   "boo-canter-hayseed-grudging-screech",
+  "3w, digit sep",   49.13,   "swatch2forte1dill",
+  "4w, digit sep",   66.61,   "convoy2chant3calf9senorita",
+  "5w, digit sep",   84.10,   "filer6gibbon3untold5save8ridden"
+)
+```
+Now let's compute the costs for the passwords kinds that we've created.
+
+
+Let's get prettier printing of the cost. 
+```{r pretty-cost}
+prettyCost <- function(cost) {
+  prettyNum(signif(cost, digits=2), big.mark = ",", scientific=FALSE)
+}
 ```
 
-Now lets compute the costs for the passwords kinds that we've created.
-
 ```{r cost-comp}
-pwdKinds %>% 
-  mutate(cost = bits2cost(bits))
+pwd %>% 
+  mutate(cost = bits2cost(bits)) %>%
+  mutate(pretty = prettyCost(cost))
 ```
