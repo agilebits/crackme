@@ -36,13 +36,21 @@ Now we should also create some data of different kinds of passwords generated in
 
 ```{r pwds}
 pwd <- tribble(
-  ~kind,             ~bits,   ~sample,
-  "3 word",          42.48,   "prithee-insured-buoyant",
-  "4 word",          56.65,   "align-caught-boycott-delete",
-  "5 word",          70.81,   "boo-canter-hayseed-grudging-screech",
-  "3w, digit sep",   49.13,   "swatch2forte1dill",
-  "4w, digit sep",   66.61,   "convoy2chant3calf9senorita",
-  "5w, digit sep",   84.10,   "filer6gibbon3untold5save8ridden"
+  ~kind,               ~bits,   ~sample,
+  "3 word",            42.48,   "prithee-insured-buoyant",
+  "4 word",            56.65,   "align-caught-boycott-delete",
+  "5 word",            70.81,   "boo-canter-hayseed-grudging-screech",
+  "3w, dig sep",       49.13,   "swatch2forte1dill",
+  "4w, dig sep",       66.61,   "convoy2chant3calf9senorita",
+  "10c, lc,dig",       50.00,   "fovav9v6ot",
+  "9c, lc,dig",        45.00,   "azdr3oqxc",
+  "8c, lc,dig",        40.00,   "2wd74wmq",
+  "11c, lc,dig",       55.00,   "aev7x9cgm3q",
+  "12c, lc,dig",       60.00,   "8cjfqtzj7yx3",
+  "8c, ltr,dig",       46.25,   "8NhJqHPY",
+  "7c, ltr,dig",       40.47,   "zCm6hTb",
+  "9c, ltr,dig",       52.03,   "siFc96vGw",
+  "10c, ltr,dig",      57.81,   "rmrgKDAyeY",
 )
 ```
 Now let's compute the costs for the passwords kinds that we've created.
