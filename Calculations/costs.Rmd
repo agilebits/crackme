@@ -66,7 +66,11 @@ prettyCost <- function(cost) {
 }
 ```
 
-And now we need to put the generation method into words. (Danger, spectucularly ugly code ahead!)
+## Wordy description of the generation scheme
+
+It would be nice to translate things like `type:"char", units:8, allow.lcase:TRUE, ...` into something like "8 character password with lowercase, digits" for friendlier display. But sometimes the seemingly easies things in R aren't.
+
+And now we need to put the generation method into words. (Danger, spectucularly ugly code ahead!). As I haven't gotten this to work, this is just some dead code for the moment. Dead and ugly.
 ```{r method-words}
 method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase=TRUE, digit=TRUE) {
   if (type == "word") {
@@ -102,6 +106,16 @@ method_words <- Vectorize(method_words)
 
 ```
 
+## Computation and prepping for display
+
+This is a long pipeline, but the components of the pipe are
+
+1. Only include cases whose strength (in bits) is between 40 and 70.
+2. Calculate costs
+3. Get costs more human readable numbers
+4. Select which columns we want in the output
+5. Sort (ascending) by strength
+
 ```{r cost-comp}
 costs_small <- pwd %>% 
   filter(between(bits, 40, 70)) %>%
@@ -111,10 +125,14 @@ costs_small <- pwd %>%
   arrange(bits)
 ```
 
+## Prettification and display
+
 And now see if we can make a decent table
 ```{r cost-table}
 kable(costs_small,
       col.names = c("Type", "units","Separator", "Lowercase", "Uppercase", 
-                    "Digits", "Bits", "Cost", "Sample"),
-      align = "lrccccrrl")
+                    "Digits", "Bits", "Cost (USD)", "Sample"),
+      align = "lrccccrrl",
+      caption ="Cracking cost for different generation schemes") %>%
+  kable_styling(bootstrap_options = c("striped"))
 ```
