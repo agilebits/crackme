@@ -11,10 +11,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-R is a messy language. Let's find a more functional way to use it with [tidyverse](https://www.tidyverse.org).
+R is a messy language. Let's find a more functional way to use it with [tidyverse](https://www.tidyverse.org). And some other libraries we'll use.
 
 ```{r libraries, warning=FALSE, message=FALSE}
 library(tidyverse)
+library(knitr)
+library(kableExtra)
 ```
 
 
@@ -36,21 +38,22 @@ Now we should also create some data of different kinds of passwords generated in
 
 ```{r pwds}
 pwd <- tribble(
-  ~kind,               ~bits,   ~sample,
-  "3 word",            42.48,   "prithee-insured-buoyant",
-  "4 word",            56.65,   "align-caught-boycott-delete",
-  "5 word",            70.81,   "boo-canter-hayseed-grudging-screech",
-  "3w, dig sep",       49.13,   "swatch2forte1dill",
-  "4w, dig sep",       66.61,   "convoy2chant3calf9senorita",
-  "10c, lc,dig",       50.00,   "fovav9v6ot",
-  "9c, lc,dig",        45.00,   "azdr3oqxc",
-  "8c, lc,dig",        40.00,   "2wd74wmq",
-  "11c, lc,dig",       55.00,   "aev7x9cgm3q",
-  "12c, lc,dig",       60.00,   "8cjfqtzj7yx3",
-  "8c, ltr,dig",       46.25,   "8NhJqHPY",
-  "7c, ltr,dig",       40.47,   "zCm6hTb",
-  "9c, ltr,dig",       52.03,   "siFc96vGw",
-  "10c, ltr,dig",      57.81,   "rmrgKDAyeY",
+  ~type,  ~length, ~separator, ~allow.ucase, ~allow.lcase, ~allow.digit, ~bits,   ~sample,
+  "word", 3, "-",     NA,    NA,    NA,    42.48,   "prithee-insured-buoyant",
+  "word", 4, "-",     NA,    NA,    NA,    56.65,   "align-caught-boycott-delete",
+  "word", 5, "-",     NA,    NA,    NA,    70.81,   "passion-ken-omit-verso-tortoise",
+  "word", 3, "digit", NA,    NA,    NA,    49.13,   "swatch2forte1dill",
+  "word", 4, "digit", NA,    NA,    NA,    66.61,   "convoy2chant3calf9senorita",
+  "word", 5, "digit", NA,    NA,    NA,    84.10,   "slain9dynast5try6punch8licensee",
+  "char", 10, NA,     FALSE, TRUE,  TRUE,  50.00,   "fovav9v6ot",
+  "char", 9,  NA,     FALSE, TRUE,  TRUE,  45.00,   "azdr3oqxc",
+  "char", 8,  NA,     FALSE, TRUE,  TRUE,  40.00,   "2wd74wmq",
+  "char", 11, NA,     FALSE, TRUE,  TRUE,  55.00,   "aev7x9cgm3q",
+  "char", 12, NA,     FALSE, TRUE,  TRUE,  60.00,   "8cjfqtzj7yx3",
+  "char", 8,  NA,     TRUE,  TRUE,  TRUE,  46.25,   "8NhJqHPY",
+  "char", 7,  NA,     TRUE,  TRUE,  TRUE,  40.47,   "zCm6hTb",
+  "char", 9,  NA,     TRUE,  TRUE,  TRUE,  52.03,   "siFc96vGw",
+  "char", 10, NA,     TRUE,  TRUE,  TRUE,  57.81,   "rmrgKDAyeY",
 )
 ```
 Now let's compute the costs for the passwords kinds that we've created.
@@ -63,8 +66,55 @@ prettyCost <- function(cost) {
 }
 ```
 
+And now we need to put the generation method into words. (Danger, spectucularly ugly code ahead!)
+```{r method-words}
+method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase=TRUE, digit=TRUE) {
+  if (type == "word") {
+    part1 = sprintf("%d words", length)
+    if (separator == "digit") {
+      part2 = "digit separator"
+    } else if (separator == "") {
+      part2 = "no separator"
+    } else {
+      part2 = "constant separator"
+    }
+    return (paste(part1, part2, sep = " "))
+        
+  } else if (type == "char") {
+    part1 = sprintf("%d characters", length)
+    d <- c("uppercase", "lowercase", "digits")
+    alloweds = paste(d[c(ucase,lcase,digit)], sep = ", ")
+    part2 = paste("with ", alloweds)
+    return (paste(part1, part2, sep = " "))
+  }
+  else {
+    stop("type must be \"word\" or \"char\"")
+  }
+  
+}
+ 
+```
+
+And Vectorize it. (The fact that I have to do this reflects my failure to really know how to do things the R way.)
+
+```{r vectorize method}
+method_words <- Vectorize(method_words)
+
+```
+
 ```{r cost-comp}
-pwd %>% 
+costs_small <- pwd %>% 
+  filter(between(bits, 40, 70)) %>%
   mutate(cost = bits2cost(bits)) %>%
-  mutate(pretty = prettyCost(cost))
+  mutate(pretty = prettyCost(cost)) %>%
+  select(type, length, separator, allow.lcase, allow.ucase, allow.digit, bits, pretty, sample) %>%
+  arrange(bits)
+```
+
+And now see if we can make a decent table
+```{r cost-table}
+kable(costs_small,
+      col.names = c("Type", "units","Separator", "Lowercase", "Uppercase", 
+                    "Digits", "Bits", "Cost", "Sample"),
+      align = "lrccccrrl")
 ```
