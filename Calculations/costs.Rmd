@@ -37,7 +37,9 @@ bits2cost <- function(b) {
 }
 ```
 
-Now we should also create some data of different kinds of passwords generated in different ways.
+## Password data
+
+Now we should also create some data of different kinds of passwords generated in different ways. The `bits` column is calculated using the the not even ready for beta [command-line wrapper](https://github.com/1Password/spg/tree/master/cmd/opgen) for the [1Password Strong Password Generator](https://github.com/1Password/spg "Github: 1Password SPG").
 
 ```{r pwds}
 pwd <- tribble(
@@ -62,16 +64,10 @@ pwd <- tribble(
 Now let's compute the costs for the passwords kinds that we've created.
 
 
-Let's get prettier printing of the cost. 
-```{r pretty-cost}
-prettyCost <- function(cost) {
-  prettyNum(signif(cost, digits=2), big.mark = ",", scientific=FALSE)
-}
-```
 
 ## Wordy description of the generation scheme
 
-It would be nice to translate things like `type:"char", units:8, allow.lcase:TRUE, ...` into something like "8 character password with lowercase, digits" for friendlier display. So we create this ugly scaler function which will happy to be wrapped in an `mapply()` later.
+It would be nice to translate things like `type:"char", units:8, allow.lcase:TRUE, ...` into something like "8 character password with lowercase, digits" for friendlier display. So we create this ugly scaler function which will have to be wrapped in an `mapply()` later.
 
 
 ```{r method-words}
@@ -104,9 +100,20 @@ method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase
 
 ## Computation and prepping for display
 
+Let's create a simple function to get prettier printing of the cost. 
+```{r pretty-cost}
+prettyCost <- function(cost) {
+  prettyNum(signif(cost, digits=2), big.mark = ",", scientific=FALSE)
+}
+```
+
+And now what we have all of the pieces, we can perform the data transformations and computation and generate a tolerable looking table.
+
+### Data transformation
+
 This is a long pipeline, but the components of the pipe are
 
-1. Only include cases whose strength (in bits) is between 40 and 72.
+1. Only include cases whose strength (in bits) is between 42 and 72.
 2. Calculate costs
 3. Get costs more human readable numbers
 4. Create textual description of generation method
@@ -115,7 +122,7 @@ This is a long pipeline, but the components of the pipe are
 
 ```{r cost-comp}
 costs_small <- pwd %>% 
-  filter(between(bits, 40, 72)) %>%
+  filter(between(bits, 42, 72)) %>%
   mutate(cost = bits2cost(bits)) %>%
   mutate(pretty = prettyCost(cost)) %>%
   mutate(method = mapply(method_words, type, length, separator, allow.ucase, allow.lcase, allow.digit)) %>%
@@ -123,14 +130,23 @@ costs_small <- pwd %>%
   arrange(bits)
 ```
 
-## Prettification and display
+### Prettification and display
 
-And now see if we can make a decent table
+And now we construct the final table
 ```{r cost-table}
-kable(costs_small,
+final_table <- kable(costs_small,
       col.names = c("Method", "Bits", "Cost (USD)", "Example"),
       align = "lrrl",
       caption ="Cracking cost for different generation schemes") %>%
   column_spec(column=4, monospace = T) %>%
   kable_styling(bootstrap_options = c("striped"), fixed_thead = TRUE)
+```
+
+```{r print-table}
+final_table
+```
+
+And let's save a copy of the table as a stand-alone HTML document.
+```{r save-table}
+save_kable(final_table, "cost_table.html", self_contained = TRUE)
 ```
