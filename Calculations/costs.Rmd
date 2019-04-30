@@ -41,24 +41,36 @@ bits2cost <- function(b) {
 
 Now we should also create some data of different kinds of passwords generated in different ways. The `bits` column is calculated using the the not even ready for beta [command-line wrapper](https://github.com/1Password/spg/tree/master/cmd/opgen) for the [1Password Strong Password Generator](https://github.com/1Password/spg "Github: 1Password SPG").
 
+The field names:
+
+- `type`: Is this a character based password (`"char"`) or a wordlist based one (`"word"`)
+- `length`: Number of characters or words
+- `w.sep`: Word separator (applicaple to wordlist passwords only)
+- `c.ucase`: Uppercase letters allowed (applicaple to character passwords only)
+- `c.lcase`: Uppercase letters allowed (applicaple to character passwords only)
+- `c.digit`: Digits allowed (applicaple to character passwords only)
+- `bits`: Strength of generated password in bits. (Computed by SPG)
+- `sample`: An example generated password
+- `exposed`: Is available to the 1Password user in the client apps
+
 ```{r pwds}
 pwd <- tribble(
-  ~type,  ~length, ~separator, ~allow.ucase, ~allow.lcase, ~allow.digit, ~bits,   ~sample,
-  "word", 3, "-",     NA,    NA,    NA,    42.48,   "prithee-insured-buoyant",
-  "word", 4, "-",     NA,    NA,    NA,    56.65,   "align-caught-boycott-delete",
-  "word", 5, "-",     NA,    NA,    NA,    70.81,   "passion-ken-omit-verso-tortoise",
-  "word", 3, "digit", NA,    NA,    NA,    49.13,   "swatch2forte1dill",
-  "word", 4, "digit", NA,    NA,    NA,    66.61,   "convoy2chant3calf9senorita",
-  "word", 5, "digit", NA,    NA,    NA,    84.10,   "slain9dynast5try6punch8licensee",
-  "char", 10, NA,     FALSE, TRUE,  TRUE,  50.00,   "fovav9v6ot",
-  "char", 9,  NA,     FALSE, TRUE,  TRUE,  45.00,   "azdr3oqxc",
-  "char", 8,  NA,     FALSE, TRUE,  TRUE,  40.00,   "2wd74wmq",
-  "char", 11, NA,     FALSE, TRUE,  TRUE,  55.00,   "aev7x9cgm3q",
-  "char", 12, NA,     FALSE, TRUE,  TRUE,  60.00,   "8cjfqtzj7yx3",
-  "char", 8,  NA,     TRUE,  TRUE,  TRUE,  46.25,   "8NhJqHPY",
-  "char", 7,  NA,     TRUE,  TRUE,  TRUE,  40.47,   "zCm6hTb",
-  "char", 9,  NA,     TRUE,  TRUE,  TRUE,  52.03,   "siFc96vGw",
-  "char", 10, NA,     TRUE,  TRUE,  TRUE,  57.81,   "rmrgKDAyeY",
+  ~type,  ~length, ~w.sep, ~c.ucase, ~c.lcase, ~c.digit, ~bits, ~sample, ~exposed,
+  "word", 3, "-",     NA, NA, NA, 42.48,   "prithee-insured-buoyant",            T,
+  "word", 4, "-",     NA, NA, NA, 56.65,   "align-caught-boycott-delete",        T,
+  "word", 5, "-",     NA, NA, NA, 70.81,   "passion-ken-omit-verso-tortoise",    T,
+  "word", 3, "digit", NA, NA, NA, 49.13,   "swatch2forte1dill",                  T,
+  "word", 4, "digit", NA, NA, NA, 66.61,   "convoy2chant3calf9senorita",         T,
+  "word", 5, "digit", NA, NA, NA, 84.10,   "slain9dynast5try6punch8licensee",    T,
+  "char", 10, NA,     F,  T,  T,  50.00,   "fovav9v6ot",                         T,
+  "char", 9,  NA,     F,  T,  T,  45.00,   "azdr3oqxc",                          T,
+  "char", 8,  NA,     F,  T,  T,  40.00,   "2wd74wmq",                           T,
+  "char", 11, NA,     F,  T,  T,  55.00,   "aev7x9cgm3q",                        T,
+  "char", 12, NA,     F,  T,  T,  60.00,   "8cjfqtzj7yx3",                       T,
+  "char", 8,  NA,     T,  T,  T,  46.25,   "8NhJqHPY",                           T,
+  "char", 7,  NA,     T,  T,  T,  40.47,   "zCm6hTb",                            T,
+  "char", 9,  NA,     T,  T,  T,  52.03,   "siFc96vGw",                          T,
+  "char", 10, NA,     T,  T,  T,  57.81,   "rmrgKDAyeY",                         T,
 )
 ```
 Now let's compute the costs for the passwords kinds that we've created.
@@ -125,7 +137,7 @@ costs_small <- pwd %>%
   filter(between(bits, 42, 72)) %>%
   mutate(cost = bits2cost(bits)) %>%
   mutate(pretty = prettyCost(cost)) %>%
-  mutate(method = mapply(method_words, type, length, separator, allow.ucase, allow.lcase, allow.digit)) %>%
+  mutate(method = mapply(method_words, type, length, w.sep, c.ucase, c.lcase, c.digit)) %>%
   select(method,  bits, pretty, sample) %>%
   arrange(bits)
 ```
