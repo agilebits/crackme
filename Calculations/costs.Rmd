@@ -73,8 +73,8 @@ It would be nice to translate things like `type:"char", units:8, allow.lcase:TRU
 And now we need to put the generation method into words. (Danger, spectucularly ugly code ahead!). As I haven't gotten this to work, this is just some dead code for the moment. Dead and ugly.
 ```{r method-words}
 method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase=TRUE, digit=TRUE) {
-  if (type == "word") {
-    part1 = sprintf("%d words", length)
+  if(type == "word") {
+    part1 = paste(length, "words")
     if (separator == "digit") {
       part2 = "digit separator"
     } else if (separator == "") {
@@ -82,28 +82,27 @@ method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase
     } else {
       part2 = "constant separator"
     }
-    return (paste(part1, part2, sep = " "))
-        
-  } else if (type == "char") {
-    part1 = sprintf("%d characters", length)
+    return (paste(part1, part2))
+  } else if(type == "char") {
+    part1 = paste(length, "characters")
     d <- c("uppercase", "lowercase", "digits")
-    alloweds = paste(d[c(ucase,lcase,digit)], sep = ", ")
+    alloweds = paste(d[c(ucase,lcase,digit)], collapse=", ")
     part2 = paste("with ", alloweds)
-    return (paste(part1, part2, sep = " "))
+    return (paste(part1, part2, sep = ", "))
   }
   else {
-    stop("type must be \"word\" or \"char\"")
+    return(type)
   }
   
 }
  
 ```
 
-And Vectorize it. (The fact that I have to do this reflects my failure to really know how to do things the R way.)
 
-```{r vectorize method}
-method_words <- Vectorize(method_words)
-
+And now lets mutate our data with that function.
+```{r mapply}
+costs_Stringy <- pwd %>%
+  mutate(method = mapply(method_words, type, length, separator, allow.ucase, allow.lcase, allow.digit))
 ```
 
 ## Computation and prepping for display
@@ -117,11 +116,11 @@ This is a long pipeline, but the components of the pipe are
 5. Sort (ascending) by strength
 
 ```{r cost-comp}
-costs_small <- pwd %>% 
+costs_small <- costs_Stringy %>% 
   filter(between(bits, 40, 70)) %>%
   mutate(cost = bits2cost(bits)) %>%
   mutate(pretty = prettyCost(cost)) %>%
-  select(type, length, separator, allow.lcase, allow.ucase, allow.digit, bits, pretty, sample) %>%
+  select(method,  bits, pretty, sample) %>%
   arrange(bits)
 ```
 
@@ -130,9 +129,8 @@ costs_small <- pwd %>%
 And now see if we can make a decent table
 ```{r cost-table}
 kable(costs_small,
-      col.names = c("Type", "units","Separator", "Lowercase", "Uppercase", 
-                    "Digits", "Bits", "Cost (USD)", "Sample"),
-      align = "lrccccrrl",
+      col.names = c("Method", "Bits", "Cost (USD)", "Sample"),
+      align = "lrrl",
       caption ="Cracking cost for different generation schemes") %>%
   kable_styling(bootstrap_options = c("striped"))
 ```
