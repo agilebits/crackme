@@ -18,19 +18,22 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 ```
-
+## Basic costs
 
 We have [previously calculated](https://discussions.agilebits.com/discussion/comment/470503/#Comment_470503) the cost to check \(2^{32}\) guesses is six US dollars. At some point in the future that cost calculation should be put into this document. For now we will take that as a given constant.
+
+
+
 
 ```{r USDper32bits}
 usdPer32bit <- 6.00
 ```
 
-We will also use a simple function for getting from bits to cost to crack. If it turns out that the the name is only used in a few places, we can ditch its name and use it anonymously.
+We will also use a simple function for getting from bits to cost to crack. If it turns out that the the name is only used in a few places, we can ditch its name and use it anonymously. The -1 in there is to reflect that on average the attacker only needs to go through half of the search space.
 
 ```{r bits2cost}
 bits2cost <- function(b) {
-  usdPer32bit * 2^(b - 32)
+  usdPer32bit * 2^((b - 32) - 1)
 }
 ```
 
@@ -128,5 +131,6 @@ kable(costs_small,
       col.names = c("Method", "Bits", "Cost (USD)", "Example"),
       align = "lrrl",
       caption ="Cracking cost for different generation schemes") %>%
-  kable_styling(bootstrap_options = c("striped"))
+  column_spec(column=4, monospace = T) %>%
+  kable_styling(bootstrap_options = c("striped"), fixed_thead = TRUE)
 ```
