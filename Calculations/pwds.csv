@@ -1,0 +1,16 @@
+type,  length, w.sep, c.ucase, c.lcase, c.digit, bits, sample, exposed
+ "word", 3, "-",     NA, NA, NA, 42.48,   "prithee-insured-buoyant",            T
+ "word", 4, "-",     NA, NA, NA, 56.65,   "align-caught-boycott-delete",        T
+ "word", 5, "-",     NA, NA, NA, 70.81,   "passion-ken-omit-verso-tortoise",    T
+ "word", 3, "digit", NA, NA, NA, 49.13,   "swatch2forte1dill",                  T
+ "word", 4, "digit", NA, NA, NA, 66.61,   "convoy2chant3calf9senorita",         T
+ "word", 5, "digit", NA, NA, NA, 84.10,   "slain9dynast5try6punch8licensee",    T
+ "char", 10, NA,     F,  T,  T,  50.00,   "fovav9v6ot",                         T
+ "char", 9,  NA,     F,  T,  T,  45.00,   "azdr3oqxc",                          T
+ "char", 8,  NA,     F,  T,  T,  40.00,   "2wd74wmq",                           T
+ "char", 11, NA,     F,  T,  T,  55.00,   "aev7x9cgm3q",                        T
+ "char", 12, NA,     F,  T,  T,  60.00,   "8cjfqtzj7yx3",                       T
+ "char", 8,  NA,     T,  T,  T,  46.25,   "8NhJqHPY",                           T
+ "char", 7,  NA,     T,  T,  T,  40.47,   "zCm6hTb",                            T
+ "char", 9,  NA,     T,  T,  T,  52.03,   "siFc96vGw",                          T
+ "char", 10, NA,     T,  T,  T,  57.81,   "rmrgKDAyeY",                         T

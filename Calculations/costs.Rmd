@@ -22,9 +22,6 @@ library(kableExtra)
 
 We have [previously calculated](https://discussions.agilebits.com/discussion/comment/470503/#Comment_470503) the cost to check \(2^{32}\) guesses is six US dollars. At some point in the future that cost calculation should be put into this document. For now we will take that as a given constant.
 
-
-
-
 ```{r USDper32bits}
 usdPer32bit <- 6.00
 ```
@@ -41,7 +38,7 @@ bits2cost <- function(b) {
 
 Now we should also create some data of different kinds of passwords generated in different ways. The `bits` column is calculated using the the not even ready for beta [command-line wrapper](https://github.com/1Password/spg/tree/master/cmd/opgen) for the [1Password Strong Password Generator](https://github.com/1Password/spg "Github: 1Password SPG").
 
-The field names:
+The field names from the datafile [pwds.csv](./pwds.csv):
 
 - `type`: Is this a character based password (`"char"`) or a wordlist based one (`"word"`)
 - `length`: Number of characters or words
@@ -53,34 +50,34 @@ The field names:
 - `sample`: An example generated password
 - `exposed`: Is available to the 1Password user in the client apps
 
-```{r pwds}
-pwd <- tribble(
-  ~type,  ~length, ~w.sep, ~c.ucase, ~c.lcase, ~c.digit, ~bits, ~sample, ~exposed,
-  "word", 3, "-",     NA, NA, NA, 42.48,   "prithee-insured-buoyant",            T,
-  "word", 4, "-",     NA, NA, NA, 56.65,   "align-caught-boycott-delete",        T,
-  "word", 5, "-",     NA, NA, NA, 70.81,   "passion-ken-omit-verso-tortoise",    T,
-  "word", 3, "digit", NA, NA, NA, 49.13,   "swatch2forte1dill",                  T,
-  "word", 4, "digit", NA, NA, NA, 66.61,   "convoy2chant3calf9senorita",         T,
-  "word", 5, "digit", NA, NA, NA, 84.10,   "slain9dynast5try6punch8licensee",    T,
-  "char", 10, NA,     F,  T,  T,  50.00,   "fovav9v6ot",                         T,
-  "char", 9,  NA,     F,  T,  T,  45.00,   "azdr3oqxc",                          T,
-  "char", 8,  NA,     F,  T,  T,  40.00,   "2wd74wmq",                           T,
-  "char", 11, NA,     F,  T,  T,  55.00,   "aev7x9cgm3q",                        T,
-  "char", 12, NA,     F,  T,  T,  60.00,   "8cjfqtzj7yx3",                       T,
-  "char", 8,  NA,     T,  T,  T,  46.25,   "8NhJqHPY",                           T,
-  "char", 7,  NA,     T,  T,  T,  40.47,   "zCm6hTb",                            T,
-  "char", 9,  NA,     T,  T,  T,  52.03,   "siFc96vGw",                          T,
-  "char", 10, NA,     T,  T,  T,  57.81,   "rmrgKDAyeY",                         T,
+```{r readr-coltypes}
+ct <- cols(
+  type = col_factor(),
+  length = col_integer(),
+  w.sep = col_factor(),
+  c.ucase = col_logical(),
+  c.lcase = col_logical(),
+  c.digit = col_logical(),
+  bits = col_double(),
+  sample = col_character(),
+  exposed = col_logical()
 )
 ```
-Now let's compute the costs for the passwords kinds that we've created.
 
+Read in the data. Note that `read.csv()` and `read_csv()` are different functions from different libraries. We want `read_csv()` from the `readr` package.
+```{r read_csv}
+pwd <- read_csv("pwds.csv", col_types=ct)
+```
 
+And we will take a look at what we have loaded
+
+```{r}
+pwd
+```
 
 ## Wordy description of the generation scheme
 
 It would be nice to translate things like `type:"char", units:8, allow.lcase:TRUE, ...` into something like "8 character password with lowercase, digits" for friendlier display. So we create this ugly scaler function which will have to be wrapped in an `mapply()` later.
-
 
 ```{r method-words}
 method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase=TRUE, digit=TRUE) {
@@ -108,7 +105,6 @@ method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase
 }
  
 ```
-
 
 ## Computation and prepping for display
 
