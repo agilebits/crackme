@@ -68,11 +68,12 @@ prettyCost <- function(cost) {
 
 ## Wordy description of the generation scheme
 
-It would be nice to translate things like `type:"char", units:8, allow.lcase:TRUE, ...` into something like "8 character password with lowercase, digits" for friendlier display. But sometimes the seemingly easies things in R aren't.
+It would be nice to translate things like `type:"char", units:8, allow.lcase:TRUE, ...` into something like "8 character password with lowercase, digits" for friendlier display. So we create this ugly scaler function which will happy to be wrapped in an `mapply()` later.
 
-And now we need to put the generation method into words. (Danger, spectucularly ugly code ahead!). As I haven't gotten this to work, this is just some dead code for the moment. Dead and ugly.
+
 ```{r method-words}
 method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase=TRUE, digit=TRUE) {
+  # I should learn how to do idiomatic switch/case in R, but oh well.
   if(type == "word") {
     part1 = paste(length, "words")
     if (separator == "digit") {
@@ -82,7 +83,7 @@ method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase
     } else {
       part2 = "constant separator"
     }
-    return (paste(part1, part2))
+    return (paste(part1, part2, sep=", "))
   } else if(type == "char") {
     part1 = paste(length, "characters")
     d <- c("uppercase", "lowercase", "digits")
@@ -91,35 +92,30 @@ method_words <- function(type="word", length=4, separator="-", ucase=TRUE, lcase
     return (paste(part1, part2, sep = ", "))
   }
   else {
-    return(type)
+    return("type must be \"char\" or \"word\"")
   }
-  
 }
  
 ```
 
 
-And now lets mutate our data with that function.
-```{r mapply}
-costs_Stringy <- pwd %>%
-  mutate(method = mapply(method_words, type, length, separator, allow.ucase, allow.lcase, allow.digit))
-```
-
 ## Computation and prepping for display
 
 This is a long pipeline, but the components of the pipe are
 
-1. Only include cases whose strength (in bits) is between 40 and 70.
+1. Only include cases whose strength (in bits) is between 40 and 72.
 2. Calculate costs
 3. Get costs more human readable numbers
+4. Create textual description of generation method
 4. Select which columns we want in the output
 5. Sort (ascending) by strength
 
 ```{r cost-comp}
-costs_small <- costs_Stringy %>% 
-  filter(between(bits, 40, 70)) %>%
+costs_small <- pwd %>% 
+  filter(between(bits, 40, 72)) %>%
   mutate(cost = bits2cost(bits)) %>%
   mutate(pretty = prettyCost(cost)) %>%
+  mutate(method = mapply(method_words, type, length, separator, allow.ucase, allow.lcase, allow.digit)) %>%
   select(method,  bits, pretty, sample) %>%
   arrange(bits)
 ```
@@ -129,7 +125,7 @@ costs_small <- costs_Stringy %>%
 And now see if we can make a decent table
 ```{r cost-table}
 kable(costs_small,
-      col.names = c("Method", "Bits", "Cost (USD)", "Sample"),
+      col.names = c("Method", "Bits", "Cost (USD)", "Example"),
       align = "lrrl",
       caption ="Cracking cost for different generation schemes") %>%
   kable_styling(bootstrap_options = c("striped"))
