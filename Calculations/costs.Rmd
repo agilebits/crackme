@@ -103,7 +103,7 @@ method_words <- function(type="word", length=4, separator="-", capscheme="none",
     part1 = paste(length, "char")
     d <- c("uppercase", "lowercase", "digits")
     alloweds = paste(d[c(ucase,lcase,digit)], collapse=", ")
-    part2 = paste("with ", alloweds)
+    part2 = paste("with", alloweds)
     return (paste(part1, part2, sep = ", "))
   }
   else {
@@ -129,7 +129,6 @@ And now what we have all of the pieces, we can perform the data transformations 
 This is a long pipeline, but the components of the pipe are
 
 1. Only include cases whose strength (in bits) is between 42 and 72.
-2. Only include cases whose options are available to users today
 2. Calculate costs
 3. Get costs more human readable numbers
 4. Create textual description of generation method
@@ -139,20 +138,20 @@ This is a long pipeline, but the components of the pipe are
 ```{r cost-comp}
 costs_small <- pwd %>% 
   filter(between(bits, 42, 72)) %>%
-  # filter(exposed==TRUE) %>%
   mutate(cost = bits2cost(bits)) %>%
   mutate(pretty = prettyCost(cost)) %>%
   mutate(method = mapply(method_words, type, length, w.sep, w.cap, c.ucase, c.lcase, c.digit)) %>%
-  select(method,  bits, pretty, sample) %>%
+  select(method,  bits, pretty, sample, exposed) %>%
   arrange(bits)
 ```
 
 ### Prettification and display
 
-And now we construct the final table
+And now we construct the final table. For this table we only want to show those SPG features that are exposed to the user in the UI.
 ```{r cost-table}
-final_table <- kable(costs_small,
-      col.names = c("Method", "Bits", "Cost (USD)", "Example"),
+final_table <- costs_small %>% 
+  select(-exposed) %>%
+  kable(col.names = c("Generation scheme", "Bits", "Cost (USD)", "Example"),
       align = "lrrl",
       caption ="Cracking cost for different generation schemes") %>%
   column_spec(column=4, monospace = T) %>%
@@ -163,19 +162,30 @@ final_table <- kable(costs_small,
 final_table
 ```
 
-## Internal
+<!-- Some extras not to be included in the main output -->
 
-I want to produce a table for an internal survay
+To create the Markdown table to be used in the 1Password blog post, we need to make a few changes.
 
-```{r survay}
+1. We don't include include examples that are not available in the UI
+2. Because KableExtra doesn't work with Markdown, we need to add the backticks for the sample passwords ourselves
+3. Because capititalization scheme isn't exposed to user we should remove that text from method.
+
+```{r md_kable,}
+md_final <- costs_small %>%
+  filter(exposed == TRUE) %>% select(-exposed) %>%
+  mutate (sample = paste("`", sample, "`", sep="")) %>%
+  mutate(method = str_remove(method, ", capitalize none")) %>%
+  kable(format="markdown",
+      col.names = c("Generation scheme", "Bits", "Cost (USD)", "Example"),
+      align = "lrrl",
+      caption ="Cracking cost for different generation schemes") 
+```
+
+```{r survay, eval=FALSE, echo=FALSE}
+## generate table for internal use. Don't for get to not filter out unexposed.
 costs_small %>%
   select(method, sample) %>%
   arrange(sample) %>%
-  kable(col.names = c("Generation scheme", "Example")) %>%
-  column_spec(column = 2, monospace = TRUE)
-```
-
-And let's save a copy of the table as a stand-alone HTML document.
-```{r save-table, eval=FALSE}
-save_kable(final_table, "cost_table.html", self_contained = TRUE)
+  mutate (sample = paste("`", sample, "`", sep="")) %>%
+  kable(format="markdown", col.names = c("Generation scheme", "Example"))
 ```
