@@ -136,13 +136,14 @@ This is a long pipeline, but the components of the pipe are
 5. Sort (ascending) by strength
 
 ```{r cost-comp}
-costs_small <- pwd %>% 
-  filter(between(bits, 42, 72)) %>%
+costs <- pwd %>% 
   mutate(cost = bits2cost(bits)) %>%
   mutate(pretty = prettyCost(cost)) %>%
   mutate(method = mapply(method_words, type, length, w.sep, w.cap, c.ucase, c.lcase, c.digit)) %>%
   select(method,  bits, pretty, sample, exposed) %>%
   arrange(bits)
+
+costs_small <- costs %>% filter(between(bits, 42, 72))
 ```
 
 ### Prettification and display
@@ -182,7 +183,7 @@ md_final <- costs_small %>%
 ```
 
 ```{r survay, eval=FALSE, echo=FALSE}
-## generate table for internal use. Don't for get to not filter out unexposed.
+## generate table for internal use. Don't forget to not filter out unexposed.
 costs_small %>%
   select(method, sample) %>%
   arrange(sample) %>%
