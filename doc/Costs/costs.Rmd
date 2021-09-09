@@ -38,18 +38,17 @@ bits2cost <- function(b) {
 
 Now we should also create some data of different kinds of passwords generated in different ways. The `bits` column is calculated using the the not even ready for beta [command-line wrapper](https://github.com/1Password/spg/tree/master/cmd/opgen) for the [1Password Strong Password Generator](https://github.com/1Password/spg "Github: 1Password SPG").
 
-The field names from the datafile [pwds.csv](./pwds.csv):
+The field names from the datafile [pwds2021.csv](./pwds2021.csv):
 
-- `type`: Is this a character based password (`"char"`) or a wordlist based one (`"word"` or '"syl"`)
+- `type`: Is this a character based password (`"char"`) or a wordlist based one (`"word"` or '"3ltr"`)
 - `length`: Number of characters or words
 - `w.sep`: Word separator (applicaple to wordlist passwords only)
-- `w.cap`: Word capitialization scheme (one of "none", "one", "random")
-- `c.ucase`: Uppercase letters allowed (applicaple to character passwords only)
-- `c.lcase`: Uppercase letters allowed (applicaple to character passwords only)
-- `c.digit`: Digits allowed (applicaple to character passwords only)
+- `w.cap`: Word capitalization scheme (one of "none", "one")
+- `c.ucase`: Uppercase letters required (applicable to character passwords only)
+- `c.lcase`: Uppercase letters allowed (applicable to character passwords only)
+- `c.digit`: Digits allowed (applicable to character passwords only)
 - `bits`: Strength of generated password in bits. (Computed by SPG)
 - `sample`: An example generated password
-- `exposed`: Is available to the 1Password user in the client apps
 
 ```{r readr-coltypes}
 ct <- cols(
@@ -61,14 +60,13 @@ ct <- cols(
   c.lcase = col_logical(),
   c.digit = col_logical(),
   bits = col_double(),
-  sample = col_character(),
-  exposed = col_logical()
+  sample = col_character()
 )
 ```
 
 Read in the data. Note that `read.csv()` and `read_csv()` are different functions from different libraries. We want `read_csv()` from the `readr` package.
 ```{r read_csv}
-pwd <- read_csv("pwds.csv", col_types=ct)
+pwd <- read_csv("pwds2021.csv", col_types=ct)
 ```
 
 And we will take a look at what we have loaded
@@ -88,13 +86,16 @@ It would be nice to translate things like `type:"char", units:8, allow.lcase:TRU
 ```{r method-words}
 method_words <- function(type="word", length=4, separator="-", capscheme="none", ucase=TRUE, lcase=TRUE, digit=TRUE) {
   # I should learn how to do idiomatic switch/case in R, but oh well.
-  if(type == "word" || type == "syl") {
+  if(type == "words" || type == "3ltrs") {
     part1 = paste(length, type)
-    if (separator == "digit") {
+    if (separator == "digits") {
       part2 = "digit separator"
-    } else if (separator == "") {
-      part2 = "no separator"
-    } else {
+    } else if (separator == "-") {
+      part2 = "hypen separator"
+    }  else if (separator == "dig_sym") {
+      part2 = "digits and symbol separator"
+    }
+    else {
       part2 = "constant separator"
     }
     part3 = paste("capitalize", capscheme)
@@ -107,7 +108,7 @@ method_words <- function(type="word", length=4, separator="-", capscheme="none",
     return (paste(part1, part2, sep = ", "))
   }
   else {
-    return("type must be \"char\" or \"word\"")
+    return("type must be \"char\", \"word\", or \"3ltr\"")
   }
 }
  
@@ -140,10 +141,10 @@ costs <- pwd %>%
   mutate(cost = bits2cost(bits)) %>%
   mutate(pretty = prettyCost(cost)) %>%
   mutate(method = mapply(method_words, type, length, w.sep, w.cap, c.ucase, c.lcase, c.digit)) %>%
-  select(method,  bits, pretty, sample, exposed) %>%
+  select(method,  bits, pretty, sample) %>%
   arrange(bits)
 
-costs_small <- costs %>% filter(between(bits, 42, 72))
+costs_small <- costs %>% filter(between(bits, 35, 80))
 ```
 
 ### Prettification and display
@@ -151,7 +152,6 @@ costs_small <- costs %>% filter(between(bits, 42, 72))
 And now we construct the final table. For this table we only want to show those SPG features that are exposed to the user in the UI.
 ```{r cost-table}
 final_table <- costs_small %>% 
-  select(-exposed) %>%
   kable(col.names = c("Generation scheme", "Bits", "Cost (USD)", "Example"),
       align = "lrrl",
       caption ="Cracking cost for different generation schemes") %>%
@@ -169,11 +169,10 @@ To create the Markdown table to be used in the 1Password blog post, we need to m
 
 1. We don't include include examples that are not available in the UI
 2. Because KableExtra doesn't work with Markdown, we need to add the backticks for the sample passwords ourselves
-3. Because capititalization scheme isn't exposed to user we should remove that text from method.
+3. Because capitalization scheme isn't exposed to user we should remove that text from method.
 
 ```{r md_kable,}
 md_final <- costs_small %>%
-  filter(exposed == TRUE) %>% select(-exposed) %>%
   mutate (sample = paste("`", sample, "`", sep="")) %>%
   mutate(method = str_remove(method, ", capitalize none")) %>%
   kable(format="markdown",
