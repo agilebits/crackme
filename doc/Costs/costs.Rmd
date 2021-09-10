@@ -17,6 +17,7 @@ R is a messy language. Let's find a more functional way to use it with [tidyvers
 library(tidyverse)
 library(knitr)
 library(kableExtra)
+library(readr)
 ```
 ## Basic costs
 
@@ -125,12 +126,21 @@ prettyCost <- function(cost) {
 
 And now what we have all of the pieces, we can perform the data transformations and computation and generate a tolerable looking table.
 
+First we will add a `costs` column to our table
+
+```{r add-cost}
+pwd <- pwd %>% mutate(cost = bits2cost(bits))
+```
+
+And when we want to save it to a file we change the `eval = false` to `eval = true` for the next code chunk
+```{r write, eval=TRUE}
+write_csv(pwd, "./for_blog.csv")
+```
 ### Data transformation
 
 This is a long pipeline, but the components of the pipe are
 
 1. Only include cases whose strength (in bits) is between 42 and 72.
-2. Calculate costs
 3. Get costs more human readable numbers
 4. Create textual description of generation method
 4. Select which columns we want in the output
@@ -138,7 +148,6 @@ This is a long pipeline, but the components of the pipe are
 
 ```{r cost-comp}
 costs <- pwd %>% 
-  mutate(cost = bits2cost(bits)) %>%
   mutate(pretty = prettyCost(cost)) %>%
   mutate(method = mapply(method_words, type, length, w.sep, w.cap, c.ucase, c.lcase, c.digit)) %>%
   select(method,  bits, pretty, sample) %>%
