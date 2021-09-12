@@ -133,7 +133,7 @@ pwd <- pwd %>% mutate(cost = bits2cost(bits))
 ```
 
 And when we want to save it to a file we change the `eval = false` to `eval = true` for the next code chunk
-```{r write, eval=TRUE}
+```{r write, eval=FALSE}
 write_csv(pwd, "./for_blog.csv")
 ```
 ### Data transformation

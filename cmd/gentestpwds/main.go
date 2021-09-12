@@ -3,16 +3,13 @@ package main
 
 import (
 	"bufio"
-	"bytes"
-	rand "crypto/rand"
-	"encoding/binary"
 	"encoding/json"
 	"flag"
 	"fmt"
-	"io"
 	"log"
-	"math"
 	"os"
+
+	"github.com/agilebits/spg"
 
 	"github.com/agilebits/crackme"
 )
@@ -30,10 +27,6 @@ func main() {
 	numPerKind := *numPerKindPtr
 	shortest := *shortestPtr
 	longest := *longestPtr
-
-	_ = numPerKind
-	_ = shortest
-	_ = longest
 
 	var file *os.File
 	var err error
@@ -59,18 +52,22 @@ func main() {
 	for scanner.Scan() {
 		words = append(words, scanner.Text())
 	}
-
-	gen, err := newGenerator(words)
+	wl, err := spg.NewWordList(words)
 	if err != nil {
-		log.Fatalf("couldn't create generator: %v", err)
+		log.Fatalf("Failed to create wordlist: %v", err)
 	}
 
 	var challenges []crackme.Challenge
 	for length := shortest; length <= longest; length++ {
+		r := spg.NewWLRecipe(length, wl)
+		r.SeparatorChar = " "
 		for i := 1; i <= numPerKind; i++ {
-			pwd := gen.generate(length)
+			pw, err := r.Generate()
+			if err != nil {
+				log.Fatalf("Failed to generate password: %v", err)
+			}
 			c := new(crackme.Challenge)
-			c.Pwd = pwd
+			c.Pwd = pw.String()
 			c.Hint = fmt.Sprintf("%d words", length)
 			c.ID = crackme.MakeID(nil)
 
@@ -88,85 +85,4 @@ func main() {
 
 	fmt.Println(string(s))
 	os.Exit(0)
-}
-
-// We haven't yet made the source of the Secure Password Generator public
-// so we'll just use an ad-hoc special purpose wordlist generator here.
-type generator struct {
-	Wordlist  []string
-	rng       io.Reader
-	Separator string
-	listSize  uint32 // number of words on list
-}
-
-// newGenerator creates a password generator from a word list
-func newGenerator(list []string) (*generator, error) {
-	g := new(generator)
-	g.Wordlist = list
-	if len(g.Wordlist) > math.MaxUint32 {
-		// Seriously. Who is going to feed in a wordlist this long?
-		return nil, fmt.Errorf("too many words (%d)", len(g.Wordlist))
-	}
-	g.listSize = uint32(len(g.Wordlist))
-	if g.listSize == 0 {
-		return nil, fmt.Errorf("empty word list")
-	}
-	g.rng = rand.Reader
-	g.Separator = " "
-
-	return g, nil
-}
-
-func (g *generator) generate(n int) string {
-	if n < 1 {
-		log.Panic("number of words requested should be > 0")
-	}
-
-	pp := ""
-	for i := 1; i <= n; i++ {
-		if i > 1 {
-			pp += g.Separator
-		}
-		index := int31n(g.listSize)
-		pp += g.Wordlist[index]
-	}
-	return pp
-}
-
-// int31n returns, as an int32, a non-negative random number in [0,n) from a cryptographic appropriate source. It panics if n <= 0 or if
-// a security-sensitive random number cannot be created. Care is taken to avoid modulo bias.
-//
-// Copied from the math/rand package.
-func int31n(n uint32) uint32 {
-	if n <= 0 {
-		panic("invalid argument to int31n")
-	}
-	if n&(n-1) == 0 { // n is power of two, can mask
-		return randomInt32() & (n - 1)
-	}
-	max := uint32((1 << 31) - 1 - (1<<31)%uint32(n))
-	v := randomInt32()
-	for v > max {
-		v = randomInt32()
-	}
-	return v % n
-}
-
-// randomInt32 creates a random 32 bit unsigned integer
-func randomInt32() uint32 {
-	b := make([]byte, 4)
-	_, err := rand.Read(b)
-	if err != nil {
-		panic("PRNG gen error:" + err.Error())
-	}
-
-	var result int32
-	buf := bytes.NewReader(b)
-	err = binary.Read(buf, binary.LittleEndian, &result)
-
-	if err != nil {
-		panic("PRNG conversion error:" + err.Error())
-	}
-
-	return uint32(result)
 }
