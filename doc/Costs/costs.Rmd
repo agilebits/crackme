@@ -1,0 +1,200 @@
+---
+title: "Costs"
+author: "Jeffrey Goldberg"
+date: "4/29/2019"
+output: html_document
+---
+
+## Prelimaries
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+R is a messy language. Let's find a more functional way to use it with [tidyverse](https://www.tidyverse.org). And some other libraries we'll use.
+
+```{r libraries, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(readr)
+```
+## Basic costs
+
+We have [previously calculated](https://discussions.agilebits.com/discussion/comment/470503/#Comment_470503) the cost to check \(2^{32}\) guesses is six US dollars. At some point in the future that cost calculation should be put into this document. For now we will take that as a given constant.
+
+```{r USDper32bits}
+usdPer32bit <- 6.00
+```
+
+We will also use a simple function for getting from bits to cost to crack. If it turns out that the the name is only used in a few places, we can ditch its name and use it anonymously. The -1 in there is to reflect that on average the attacker only needs to go through half of the search space.
+
+```{r bits2cost}
+bits2cost <- function(b) {
+  usdPer32bit * 2^((b - 32) - 1)
+}
+```
+
+## Password data
+
+Now we should also create some data of different kinds of passwords generated in different ways. The `bits` column is calculated using the the not even ready for beta [command-line wrapper](https://github.com/1Password/spg/tree/master/cmd/opgen) for the [1Password Strong Password Generator](https://github.com/1Password/spg "Github: 1Password SPG").
+
+The field names from the datafile [pwds2021.csv](./pwds2021.csv):
+
+- `type`: Is this a character based password (`"char"`) or a wordlist based one (`"word"` or '"3ltr"`)
+- `length`: Number of characters or words
+- `w.sep`: Word separator (applicaple to wordlist passwords only)
+- `w.cap`: Word capitalization scheme (one of "none", "one")
+- `c.ucase`: Uppercase letters required (applicable to character passwords only)
+- `c.lcase`: Uppercase letters allowed (applicable to character passwords only)
+- `c.digit`: Digits allowed (applicable to character passwords only)
+- `bits`: Strength of generated password in bits. (Computed by SPG)
+- `sample`: An example generated password
+
+```{r readr-coltypes}
+ct <- cols(
+  type = col_factor(),
+  length = col_integer(),
+  w.sep = col_factor(),
+  w.cap = col_factor(),
+  c.ucase = col_logical(),
+  c.lcase = col_logical(),
+  c.digit = col_logical(),
+  bits = col_double(),
+  sample = col_character()
+)
+```
+
+Read in the data. Note that `read.csv()` and `read_csv()` are different functions from different libraries. We want `read_csv()` from the `readr` package.
+```{r read_csv}
+pwd <- read_csv("pwds2021.csv", col_types=ct)
+```
+
+And we will take a look at what we have loaded
+
+```{r}
+pwd
+```
+
+```{r echo=FALSE}
+rm(ct)
+```
+
+## Wordy description of the generation scheme
+
+It would be nice to translate things like `type:"char", units:8, allow.lcase:TRUE, ...` into something like "8 character password with lowercase, digits" for friendlier display. So we create this ugly scaler function which will have to be wrapped in an `mapply()` later.
+
+```{r method-words}
+method_words <- function(type="word", length=4, separator="-", capscheme="none", ucase=TRUE, lcase=TRUE, digit=TRUE) {
+  # I should learn how to do idiomatic switch/case in R, but oh well.
+  if(type == "words" || type == "3ltrs") {
+    part1 = paste(length, type)
+    if (separator == "digits") {
+      part2 = "digit separator"
+    } else if (separator == "-") {
+      part2 = "hypen separator"
+    }  else if (separator == "dig_sym") {
+      part2 = "digits and symbol separator"
+    }
+    else {
+      part2 = "constant separator"
+    }
+    part3 = paste("capitalize", capscheme)
+    return (paste(part1, part2, part3, sep=", "))
+  } else if(type == "char") {
+    part1 = paste(length, "char")
+    d <- c("uppercase", "lowercase", "digits")
+    alloweds = paste(d[c(ucase,lcase,digit)], collapse=", ")
+    part2 = paste("with", alloweds)
+    return (paste(part1, part2, sep = ", "))
+  }
+  else {
+    return("type must be \"char\", \"word\", or \"3ltr\"")
+  }
+}
+ 
+```
+
+## Computation and prepping for display
+
+Let's create a simple function to get prettier printing of the cost. 
+```{r pretty-cost}
+prettyCost <- function(cost) {
+  prettyNum(signif(cost, digits=2), big.mark = ",", scientific=FALSE)
+}
+```
+
+And now what we have all of the pieces, we can perform the data transformations and computation and generate a tolerable looking table.
+
+First we will add a `costs` column to our table
+
+```{r add-cost}
+pwd <- pwd %>% mutate(cost = bits2cost(bits))
+```
+
+And when we want to save it to a file we change the `eval = false` to `eval = true` for the next code chunk
+```{r write, eval=TRUE}
+write_csv(pwd, "./for_blog.csv")
+```
+### Data transformation
+
+This is a long pipeline, but the components of the pipe are
+
+1. Only include cases whose strength (in bits) is between 42 and 72.
+3. Get costs more human readable numbers
+4. Create textual description of generation method
+4. Select which columns we want in the output
+5. Sort (ascending) by strength
+
+```{r cost-comp}
+costs <- pwd %>% 
+  mutate(pretty = prettyCost(cost)) %>%
+  mutate(method = mapply(method_words, type, length, w.sep, w.cap, c.ucase, c.lcase, c.digit)) %>%
+  select(method,  bits, pretty, sample) %>%
+  arrange(bits)
+
+costs_small <- costs %>% filter(between(bits, 35, 80))
+```
+
+### Prettification and display
+
+And now we construct the final table. For this table we only want to show those SPG features that are exposed to the user in the UI.
+```{r cost-table}
+final_table <- costs_small %>% 
+  kable(col.names = c("Generation scheme", "Bits", "Cost (USD)", "Example"),
+      align = "lrrl",
+      caption ="Cracking cost for different generation schemes") %>%
+  column_spec(column=4, monospace = T) %>%
+  kable_styling(bootstrap_options = c("striped"), fixed_thead = TRUE)
+```
+
+```{r print-table}
+final_table
+```
+
+<!-- Some extras not to be included in the main output -->
+
+To create the Markdown table to be used in the 1Password blog post, we need to make a few changes.
+
+1. We don't include include examples that are not available in the UI
+2. Because KableExtra doesn't work with Markdown, we need to add the backticks for the sample passwords ourselves
+3. Because capitalization scheme isn't exposed to user we should remove that text from method.
+
+```{r md_kable,}
+md_final <- costs_small %>%
+  mutate (sample = paste("`", sample, "`", sep="")) %>%
+  mutate(method = str_remove(method, ", capitalize none")) %>%
+  kable(format="markdown",
+      col.names = c("Generation scheme", "Bits", "Cost (USD)", "Example"),
+      align = "lrrl",
+      caption ="Cracking cost for different generation schemes") 
+```
+
+```{r survay, eval=FALSE, echo=FALSE}
+## generate table for internal use. Don't forget to not filter out unexposed.
+costs_small %>%
+  select(method, sample) %>%
+  arrange(sample) %>%
+  mutate (sample = paste("`", sample, "`", sep="")) %>%
+  kable(format="markdown", col.names = c("Generation scheme", "Example"))
+```

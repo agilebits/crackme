@@ -28,6 +28,7 @@ type Challenge struct {
 	SaltHex  string `json:"salt"`
 	DkHex    string `json:"derived,omitempty"`
 	Pwd      string `json:"pwd,omitempty"`
+	BitHint  string `json:"bitHint,omitempty"`
 
 	KeyLen  int    `json:"-"`
 	Salt    []byte `json:"-"`
@@ -109,6 +110,28 @@ func (c *Challenge) FleshOut() {
 		// By taking a multiple of five bytes, we get base32 encoding without padding
 		c.ID = MakeID(c.Salt)
 	}
+}
+
+// MakeBitHint returns a string representing the first bits bits of the
+// SHA256 hash of the string
+func MakeBitHint(s string, bits int) string {
+	if bits < 1 {
+		return "0b"
+	}
+	if bits > 8 {
+		bits = 8
+	}
+	h := sha256.New()
+	h.Write([]byte(s))
+	lead := h.Sum(nil)[0]
+
+	// will right shift lead by 8 - bits
+	lead >>= 8 - uint(bits)
+
+	// then print result to bits places
+	fmtString := fmt.Sprintf("0b%%0%db", bits)
+	out := fmt.Sprintf(fmtString, lead)
+	return out
 }
 
 func (c *Challenge) String() string {

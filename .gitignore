@@ -1,0 +1,6 @@
+.vscode/launch.json
+.Rproj.user
+.Rdata
+.Rhistory
+doc/Costs/cost_table.html
+doc/Costs/cost_table.md

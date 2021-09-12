@@ -84,7 +84,36 @@ $ chcreator -t < answers-2018-03-30.json
 0 bad derived keys out of 5 tested
 ```
 
-
 ## Next steps
 
 Keep the "answers" file private and publish the "challenge" file. Destroy the "secret" and "edit" files.
+
+## Verifying submission
+
+Submissions are through the Bugcrowd submission process for the https://bugcrowd.com/onepasswordgame program. Timestamps will be from the Bugcrowd tracker.
+
+### Is the submission valid?
+
+1. Is the submission via the Bugcrowd program?
+1. Does the submission contain a challenge ID and a single candidate password?
+
+### Is the candidate password correct?
+
+2. Verify that the challenge ID is among the challenges.
+3. Copy the corresponding entry into a file, say `candidate-ID-Submitter.json`
+4. Add the candidate password as a `"pwd"` field to that challenge.
+5. run `chcreator -t < candidate-ID-Submitter.json`
+6. If all goes well, it should return "0 bad derived keys out of 1 tested"
+7. If it reports a bad derived key, then double check for any editing/coping errors. Perhaps test your procedures on the item listed above in this document. Unless there is reason to believe that the submission is insincere, ask someone else to check as well.
+
+### Handling a correct submission
+
+We need to let all participants know that the particular item has been cracked
+
+1. Modify to brief to list the that item ID as found, and what the password is.
+2. Let the submitters know that their submission was correct. Remind them that to collect the prize they will need to submit a write up, describing the resources used, guessing rates, etc.
+3. Tweet, or otherwise, publicize the find beyond the brief.
+
+### Handling incorrect submissions
+
+This really shouldn't happen. Once a candidate is considered, it should be easy to determine whether it works or not. We will deal with this situation if it arises.

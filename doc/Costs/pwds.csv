@@ -1,0 +1,24 @@
+type,  length, w.sep, c.ucase, w.cap, c.lcase, c.digit, bits, sample, exposed
+ "word", 3, "-",     NA, "none", NA, NA, 42.48,   "prithee-insured-buoyant",          T
+ "word", 4, "-",     NA, "none", NA, NA, 56.65,   "align-caught-boycott-delete",      T
+ "word", 5, "-",     NA, "none", NA, NA, 70.81,   "passion-ken-omit-verso-tortoise",  T
+ "word", 3, "digit", NA, "none", NA, NA, 49.13,   "swatch2forte1dill",                T
+ "word", 4, "digit", NA, "none", NA, NA, 66.61,   "convoy2chant3calf9senorita",       T
+ "word", 5, "digit", NA, "none", NA, NA, 84.10,   "slain9dynast5try6punch8licensee",  T
+ "char", 10, NA,     F,  "none", T,  T,  50.00,   "fovav9v6ot",                       T
+ "char", 9,  NA,     F,  "none", T,  T,  45.00,   "azdr3oqxc",                        T
+ "char", 8,  NA,     F,  "none", T,  T,  40.00,   "2wd74wmq",                         T
+ "char", 11, NA,     F,  "none", T,  T,  55.00,   "aev7x9cgm3q",                      T
+ "char", 12, NA,     F,  "none", T,  T,  60.00,   "8cjfqtzj7yx3",                     T
+ "char", 8,  NA,     T,  "none", T,  T,  46.25,   "8NhJqHPY",                         T
+ "char", 7,  NA,     T,  "none", T,  T,  40.47,   "zCm6hTb",                          T
+ "char", 9,  NA,     T,  "none", T,  T,  52.03,   "siFc96vGw",                        T
+ "char", 10, NA,     T,  "none", T,  T,  57.81,   "rmrgKDAyeY",                       T
+ "word", 3, "digit", NA, "one",  NA, NA, 50.71,   "saute7docket3Bungalow",            F
+ "word", 4, "digit", NA, "one",  NA, NA, 68.61,   "ultima2jagged9Absent7vishnu",      F
+ "word", 3, "-",     NA, "one",  NA, NA, 44.07,   "Dent-impanel-minority",            F
+ "word", 4, "-",     NA, "one",  NA, NA, 58.65,   "gable-drought-Menthol-stun",       F
+ "syl",  3, "none",  NA, "one",  NA, NA, 41.50,   "austEerkkrug",                     F
+ "syl",  4, "none",  NA, "one",  NA, NA, 55.22,   "paghdeygibFrom",                   F
+ "syl",  3, "digit", NA, "one",  NA, NA, 48.15,   "Best0jogh2gno",                    F
+ "syl",  4, "digit", NA, "one",  NA, NA, 65.19,   "ket5Nor0koul7toss",                F
