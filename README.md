@@ -121,3 +121,16 @@ SFELTO3W  | Found     | faint bust perturb        | 0b00 | 2018-11-07      | [Li
 DOHB6DC7  | Found     | mansard humpback unbutton | 0b00 | 2018-10-14      | [List](./write-ups/DOHB6DC7.md#members)      | 1st   | [write up](./write-ups/DOHB6DC7.md)
 2SB5OP3G  | Found     | befell car granary        | 0b00 | 2018-11-10      | TBA           | 3rd   | 
 5BSLBTKR  | Found     | minute judd obedient      | 0b10 | 2019-01-10      | TBA           | 4th  |
+
+## License
+
+<sup>
+This repository is licensed under the <a href="LICENSE">MIT license</a>.
+</sup>
+
+<br>
+
+<sub>
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in this project by you, 
+shall be licensed as MIT, without any additional terms or conditions.
+</sub>
